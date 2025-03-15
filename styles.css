@@ -11,14 +11,14 @@ header {
     background-color: #fcb900;  /* 背景顏色為 #fcb900 */
     color: white;
     padding: 0 20px;  /* 左右邊距 */
-    height: 100px;  /* 高度設為100px */
+    height: 64px;  /* 高度設為64px */
     display: flex;
     align-items: center;  /* 垂直居中 */
 }
 
 header h1 {
     margin: 0;  /* 去除標題的預設 margin */
-    font-size: 24px;
+    font-size: 1.25rem;  /* 設定文字大小為 1.25rem */
 }
 
 /* Footer 部分樣式 */
@@ -52,7 +52,7 @@ input, button {
 /* 響應式設計（RWD） */
 @media (max-width: 768px) {
     header h1 {
-        font-size: 18px;  /* 在小螢幕上減小字體大小 */
+        font-size: 1.25rem;  /* 小螢幕下保留 1.25rem 的文字大小 */
     }
 
     input, button {
