@@ -47,13 +47,15 @@ main {
 
 /* 篩選條件區 */
 .filter-container {
-    width: 320px;   /* 設定篩選區大小 */
+    width: 400px;   /* 改為 400px 寬度 */
+    height: 559px;  /* 改為 559px 高度 */
     padding: 20px;
     background-color: #fff;
     box-shadow: 0 4px 8px rgba(0, 0, 0, 0.1);
     margin-right: 20px;  /* 與卡牌區間的間隔 */
     position: sticky;
     top: 20px; /* 固定篩選區塊 */
+    overflow-y: auto; /* 讓內容可以滾動 */
 }
 
 .filter-container h2 {
@@ -63,7 +65,7 @@ main {
 /* 卡牌顯示區 */
 .card-container {
     display: grid;
-    grid-template-columns: repeat(5, 400px); /* 每排 5 張卡牌 */
+    grid-template-columns: repeat(auto-fill, minmax(400px, 1fr)); /* 根據容器寬度自動分配卡牌 */
     gap: 20px;
     justify-content: start;
     flex-grow: 1;
@@ -71,13 +73,14 @@ main {
 
 /* 單一卡牌樣式 */
 .card {
-    width: 400px;
-    height: 559px;
+    width: 100%; /* 讓卡牌寬度佔滿容器 */
+    height: auto;
     background-color: white;
     box-shadow: 0 4px 8px rgba(0, 0, 0, 0.1);
     text-align: center;
     cursor: pointer;
     padding: 10px;
+    transition: transform 0.2s; /* 添加浮起效果的過渡 */
 }
 
 .card img {
@@ -85,8 +88,8 @@ main {
     height: auto;
 }
 
-.card h3 {
-    margin-top: 10px;
+.card:hover {
+    transform: translateY(-10px); /* 滑鼠懸停時圖片浮起 */
 }
 
 /* 彈窗樣式 */
@@ -157,13 +160,13 @@ button:hover {
 /* 響應式設計（RWD） */
 @media (max-width: 1200px) {
     .card-container {
-        grid-template-columns: repeat(4, 400px); /* 當螢幕較窄時，每排顯示 4 張卡牌 */
+        grid-template-columns: repeat(4, 1fr); /* 當螢幕較窄時，每排顯示 4 張卡牌 */
     }
 }
 
 @media (max-width: 992px) {
     .card-container {
-        grid-template-columns: repeat(3, 400px); /* 更窄螢幕時，每排顯示 3 張卡牌 */
+        grid-template-columns: repeat(3, 1fr); /* 更窄螢幕時，每排顯示 3 張卡牌 */
     }
 }
 
@@ -180,12 +183,12 @@ button:hover {
     }
 
     .card-container {
-        grid-template-columns: repeat(2, 400px); /* 每排顯示 2 張卡牌 */
+        grid-template-columns: repeat(2, 1fr); /* 每排顯示 2 張卡牌 */
     }
 }
 
 @media (max-width: 480px) {
     .card-container {
-        grid-template-columns: repeat(1, 400px); /* 每排顯示 1 張卡牌 */
+        grid-template-columns: repeat(1, 1fr); /* 每排顯示 1 張卡牌 */
     }
 }
