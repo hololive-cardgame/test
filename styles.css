@@ -17,8 +17,8 @@ header {
 }
 
 header h1 {
-    margin: 0;  /* 去除標題的預設 margin */
-    font-size: 1.25rem;  /* 設定文字大小為 1.25rem */
+    margin: 0;
+    font-size: 1.25rem;
 }
 
 /* Footer 部分樣式 */
@@ -37,29 +37,52 @@ main {
     padding: 20px;
 }
 
-/* 搜尋框和按鈕樣式 */
-input, button {
-    padding: 10px;
-    margin: 10px;
-    font-size: 16px;
+/* 卡牌顯示區 */
+#card-container {
+    display: flex;
+    flex-wrap: wrap;
 }
 
-/* 卡牌結果區域樣式 */
-#card-result {
+.card {
+    width: 18%;
+    margin: 1%;
+    padding: 10px;
+    background-color: white;
+    box-shadow: 0 4px 8px rgba(0, 0, 0, 0.1);
+    text-align: center;
+}
+
+.card img {
+    width: 100%;
+    height: auto;
+}
+
+/* 分頁樣式 */
+.pagination {
+    text-align: center;
     margin-top: 20px;
+}
+
+.pagination button {
+    padding: 5px 10px;
+    margin: 0 5px;
+    cursor: pointer;
+}
+
+.pagination button:hover {
+    background-color: #fcb900;
+    color: white;
+}
+
+.pagination .active {
+    font-weight: bold;
+    background-color: #fcb900;
+    color: white;
 }
 
 /* 響應式設計（RWD） */
 @media (max-width: 768px) {
-    header h1 {
-        font-size: 1.25rem;  /* 小螢幕下保留 1.25rem 的文字大小 */
-    }
-
-    input, button {
-        width: 100%;  /* 讓搜尋框和按鈕寬度100%，適配小螢幕 */
-    }
-
-    footer p {
-        font-size: 14px;  /* 小螢幕下減小footer字體 */
+    .card {
+        width: 45%;
     }
 }
