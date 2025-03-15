@@ -1,0 +1,43 @@
+/* 通用樣式 */
+body {
+    font-family: Arial, sans-serif;
+    margin: 0;
+    padding: 0;
+    background-color: #f4f4f4;  /* 背景顏色 */
+}
+
+/* Header 部分樣式 */
+header {
+    background-color: #fcb900;  /* 背景顏色為 #fcb900 */
+    color: white;
+    padding: 20px;
+    text-align: center;
+}
+
+/* Footer 部分樣式 */
+footer {
+    background-color: #fcb900;  /* 背景顏色為 #fcb900 */
+    color: white;
+    padding: 10px;
+    text-align: center;
+    position: fixed;
+    bottom: 0;
+    width: 100%;
+}
+
+/* 主要內容部分 */
+main {
+    padding: 20px;
+}
+
+/* 搜尋框和按鈕樣式 */
+input, button {
+    padding: 10px;
+    margin: 10px;
+    font-size: 16px;
+}
+
+/* 卡牌結果區域樣式 */
+#card-result {
+    margin-top: 20px;
+}
