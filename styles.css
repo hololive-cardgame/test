@@ -10,8 +10,15 @@ body {
 header {
     background-color: #fcb900;  /* 背景顏色為 #fcb900 */
     color: white;
-    padding: 20px;
-    text-align: center;
+    padding: 0 20px;  /* 左右邊距 */
+    height: 100px;  /* 高度設為100px */
+    display: flex;
+    align-items: center;  /* 垂直居中 */
+}
+
+header h1 {
+    margin: 0;  /* 去除標題的預設 margin */
+    font-size: 24px;
 }
 
 /* Footer 部分樣式 */
@@ -40,4 +47,19 @@ input, button {
 /* 卡牌結果區域樣式 */
 #card-result {
     margin-top: 20px;
+}
+
+/* 響應式設計（RWD） */
+@media (max-width: 768px) {
+    header h1 {
+        font-size: 18px;  /* 在小螢幕上減小字體大小 */
+    }
+
+    input, button {
+        width: 100%;  /* 讓搜尋框和按鈕寬度100%，適配小螢幕 */
+    }
+
+    footer p {
+        font-size: 14px;  /* 小螢幕下減小footer字體 */
+    }
 }
