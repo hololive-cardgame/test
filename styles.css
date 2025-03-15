@@ -61,7 +61,7 @@ main {
 
 /* 彈窗樣式 */
 .modal {
-    display: none;
+    display: none;  /* 預設為隱藏 */
     position: fixed;
     z-index: 1;
     left: 0;
