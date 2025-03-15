@@ -63,18 +63,18 @@ function showCardDetail(index) {
     document.getElementById('modal-name').textContent = card.name;
     document.getElementById('modal-description').textContent = card.description;
 
-    document.getElementById('card-modal').style.display = 'block';
+    document.getElementById('card-modal').style.display = 'block';  // 顯示彈窗
 }
 
 // 關閉彈窗
 document.getElementById('close-modal').onclick = () => {
-    document.getElementById('card-modal').style.display = 'none';
+    document.getElementById('card-modal').style.display = 'none';  // 隱藏彈窗
 };
 
 // 點擊空白處關閉彈窗
 window.onclick = (event) => {
     if (event.target == document.getElementById('card-modal')) {
-        document.getElementById('card-modal').style.display = 'none';
+        document.getElementById('card-modal').style.display = 'none';  // 隱藏彈窗
     }
 };
 
