@@ -4,9 +4,7 @@
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
     <title>hololive卡牌查詢資料庫</title>
-    <!-- 設定網站圖示 (favicon) -->
     <link rel="icon" href="icon.png" type="image/png">
-    
     <link rel="stylesheet" href="styles.css">
 </head>
 <body>
@@ -17,8 +15,26 @@
 
     <!-- 主要內容部分 -->
     <main>
-        <div id="card-container"></div>
-        <div id="pagination" class="pagination"></div>
+        <div class="container">
+            <!-- 篩選條件區 -->
+            <div class="filter-container">
+                <h2>篩選條件</h2>
+                <!-- 可以放置篩選的表單或選項 -->
+                <form id="filter-form">
+                    <label for="type">卡牌類型:</label>
+                    <select id="type">
+                        <option value="">所有</option>
+                        <option value="type1">類型1</option>
+                        <option value="type2">類型2</option>
+                        <option value="type3">類型3</option>
+                    </select>
+                    <button type="submit">篩選</button>
+                </form>
+            </div>
+
+            <!-- 卡牌顯示區 -->
+            <div id="card-container" class="card-container"></div>
+        </div>
     </main>
 
     <!-- Footer 部分 -->
@@ -26,7 +42,6 @@
         <p>版權所有規hololive official card game</p>
     </footer>
 
-    <!-- 彈窗 -->
     <div id="card-modal" class="modal">
         <div class="modal-content">
             <span id="close-modal" class="close">&times;</span>
