@@ -3,17 +3,17 @@ body {
     font-family: Arial, sans-serif;
     margin: 0;
     padding: 0;
-    background-color: #f4f4f4;  /* 背景顏色 */
+    background-color: #f4f4f4;
 }
 
 /* Header 部分樣式 */
 header {
-    background-color: #fcb900;  /* 背景顏色為 #fcb900 */
+    background-color: #fcb900;
     color: white;
-    padding: 0 20px;  /* 左右邊距 */
-    height: 64px;  /* 高度設為64px */
+    padding: 0 20px;
+    height: 64px;
     display: flex;
-    align-items: center;  /* 垂直居中 */
+    align-items: center;
 }
 
 header h1 {
@@ -23,7 +23,7 @@ header h1 {
 
 /* Footer 部分樣式 */
 footer {
-    background-color: #fcb900;  /* 背景顏色為 #fcb900 */
+    background-color: #fcb900;
     color: white;
     padding: 10px;
     text-align: center;
@@ -41,16 +41,17 @@ main {
 #card-container {
     display: flex;
     flex-wrap: wrap;
-    justify-content: space-between;  /* 設置為每行有 5 張卡牌 */
+    justify-content: space-between;
 }
 
 .card {
-    width: 18%;  /* 設定每張卡牌佔 18% 寬度，這樣就能有 5 張卡牌排在一行 */
-    margin: 1%;   /* 加上間隔來顯示卡牌之間的距離 */
+    width: 18%;
+    margin: 1%;
     padding: 10px;
     background-color: white;
     box-shadow: 0 4px 8px rgba(0, 0, 0, 0.1);
     text-align: center;
+    cursor: pointer;
 }
 
 .card img {
@@ -58,38 +59,80 @@ main {
     height: auto;
 }
 
-/* 分頁樣式 */
-.pagination {
-    text-align: center;
+/* 彈窗樣式 */
+.modal {
+    display: none;
+    position: fixed;
+    z-index: 1;
+    left: 0;
+    top: 0;
+    width: 100%;
+    height: 100%;
+    background-color: rgba(0, 0, 0, 0.5);
+    overflow: auto;
+}
+
+.modal-content {
+    position: relative;
+    background-color: white;
+    margin: 10% auto;
+    padding: 20px;
+    width: 80%;
+    max-width: 600px;
+    box-shadow: 0 4px 8px rgba(0, 0, 0, 0.1);
+}
+
+.modal img {
+    width: 100%;
+    height: auto;
+}
+
+.modal-nav {
+    display: flex;
+    justify-content: space-between;
     margin-top: 20px;
 }
 
-.pagination button {
-    padding: 5px 10px;
-    margin: 0 5px;
+button {
+    background-color: #fcb900;
+    color: white;
+    border: none;
+    padding: 10px;
     cursor: pointer;
 }
 
-.pagination button:hover {
-    background-color: #fcb900;
-    color: white;
+button:hover {
+    background-color: #e1a500;
 }
 
-.pagination .active {
+/* 右邊箭頭 */
+#next-card {
+    margin-left: auto;
+}
+
+/* 關閉按鈕 */
+.close {
+    position: absolute;
+    top: 10px;
+    right: 20px;
+    font-size: 30px;
     font-weight: bold;
-    background-color: #fcb900;
-    color: white;
+    cursor: pointer;
+}
+
+.close:hover {
+    color: red;
 }
 
 /* 響應式設計（RWD） */
 @media (max-width: 768px) {
     .card {
-        width: 45%;  /* 在小屏幕上每行顯示 2 張卡牌 */
+        width: 45%;
     }
 }
 
 @media (max-width: 480px) {
     .card {
-        width: 90%;  /* 在超小螢幕上每行顯示 1 張卡牌 */
+        width: 90%;
     }
 }
