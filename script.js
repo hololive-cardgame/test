@@ -34,9 +34,9 @@ function generateFilterOptions() {
     const attributes = new Set();
     const tags = new Set();
     const sets = {
-        "起始牌組": new Set();
-        "補充包": new Set();
-        "其他": new Set();
+        "起始牌組": new Set(),
+        "補充包": new Set(),
+        "其他": new Set()
     };
     
 // 這是用來儲存卡牌名稱的集合
