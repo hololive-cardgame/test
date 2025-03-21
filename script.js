@@ -1,13 +1,15 @@
 // 取得所有的篩選選單元素
+const clearFiltersBtn = document.getElementById('clear-filters');
+const cardContainer = document.getElementById('card-container');
 const keywordSelect = document.getElementById('keyword');
 const typeSelect = document.getElementById('type');
 const attributeSelect = document.getElementById('attribute');
 const tagSelect = document.getElementById('tag');
 const setSelect = document.getElementById('set');
-const cardContainer = document.getElementById('card-container');
 // 彈窗
 const cardModal = document.getElementById('card-modal');
 const closeModal = document.getElementById('close-modal');
+
 
 let cardData = [];  // 儲存所有卡牌資料
 let filteredCards = [];  // 篩選後的卡牌資料
@@ -87,47 +89,72 @@ function filterCards() {
         const matchesKeyword = card.name.toLowerCase().includes(keyword);
         const matchesType = type ? card.type === type : true;
         const matchesAttribute = attribute ? card.attribute === attribute : true;
-        const matchesTag = tag ? card.tag && card.tag.includes(tag) : true;
+        // 處理 tag 的篩選
+        const matchesTag = tag ? card.tag && card.tag.split(' / ').includes(tag) : true;
         const matchesSet = set ? card.set === set : true;
 
         return matchesKeyword && matchesType && matchesAttribute && matchesTag && matchesSet;
     });
 
+    // 去重邏輯：基於卡牌的所有篩選條件去重
+    const uniqueCards = removeDuplicates(filteredCards);
+    
     displayCards(filteredCards);
+}
+
+// 去重函數，根據所有篩選條件（包括名稱、類型、屬性、tag、id等）進行去重
+function removeDuplicates(cards) {
+    const seen = new Set();
+    const uniqueCards = [];
+
+    cards.forEach(card => {
+        // 使用一個唯一的識別符來檢查是否已經處理過該卡牌
+        const uniqueKey = `${card.name}-${card.type}-${card.attribute}-${card.tag || ''}`;
+        
+        if (!seen.has(uniqueKey)) {
+            seen.add(uniqueKey);
+            uniqueCards.push(card);
+        }
+    });
+
+    return uniqueCards;
 }
 
 // 顯示卡牌
 function displayCards(cards) {
     cardContainer.innerHTML = ''; // 清空現有卡牌
 
+    // 如果沒有卡牌，顯示提示訊息
+    if (cards.length === 0) {
+        cardContainer.innerHTML = '<p>沒有符合的卡牌。</p>';
+        return;
+    }
+
     cards.forEach(card => {
         const cardElement = document.createElement('div');
         cardElement.classList.add('card');
         cardElement.innerHTML = `
             <img src="${card.image}" alt="${card.name}">
-            <h3>${card.name}</h3>
-            <p>${card.skill}</p>
         `;
-
         // 點擊卡牌展示詳細資訊
         cardElement.addEventListener('click', () => {
             showCardModal(card);
         });
-
         cardContainer.appendChild(cardElement);
     });
 }
 
-    // 清除篩選條件
-    clearFiltersButton.addEventListener('click', function() {
-        keywordSelect.value = '';
-        typeSelect.value = '';
-        attributeSelect.value = '';
-        tagSelect.value = '';
-        setSelect.value = '';
-        filteredCards = cardData;  // 恢復所有卡牌
-        renderCards(filteredCards);
-    });
+// 清除篩選條件
+clearFiltersBtn.addEventListener('click', () => {
+    keywordSelect.value = '';
+    typeSelect.value = '';
+    attributeSelect.value = '';
+    tagSelect.value = '';
+    setSelect.value = '';
+    
+    // 顯示所有卡牌
+    displayCards(cardsData);
+});
 
 // 顯示卡牌詳細資訊
 function showCardModal(card) {
@@ -148,15 +175,12 @@ document.getElementById('close-modal').addEventListener('click', () => {
 // (這部分會在 fetch 成功後自動執行)
 document.getElementById('filter-form').addEventListener('change', filterCards);
 
-// 監聽清除篩選條件按鈕
-document.getElementById('clear-filters').addEventListener('click', () => {
-    keywordSelect.value = '';
-    typeSelect.value = '';
-    attributeSelect.value = '';
-    tagSelect.value = '';
-    setSelect.value = '';
-    filterCards();
-});
+// 監聽篩選條件變動，觸發篩選
+keywordSelect.addEventListener('change', filterCards);
+typeSelect.addEventListener('change', filterCards);
+attributeSelect.addEventListener('change', filterCards);
+tagSelect.addEventListener('change', filterCards);
+setSelect.addEventListener('change', filterCards);
 
 let currentPage = 1;
 const cardsPerPage = 10;
