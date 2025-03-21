@@ -46,6 +46,8 @@ function generateFilterOptions() {
         keywords.add(card.name);
     });
 
+    // 清空下拉選單
+    keywordSelect.innerHTML = '';
     // 填充關鍵字選項
     keywords.forEach(keyword => {
         if (keyword) {
@@ -55,7 +57,6 @@ function generateFilterOptions() {
             keywordSelect.appendChild(option);  // 假設你有關鍵字選單的 DOM 元素
         }
     });
-
     // 設定預設為空值（選單本身保持空）
     keywordSelect.value = "";  // 預設為空選項
 
