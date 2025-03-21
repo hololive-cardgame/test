@@ -48,9 +48,9 @@ cardsData.forEach(card => {
         card.tag.split(' / ').forEach(tag => tags.add(tag));
     }
     if (card.set) {
-        if (card.set === "起始牌組") {
+        if (card.set.includes("起始牌組")) {
             sets["起始牌組"].add(card.set);
-        }else if (card.set === "補充包") {
+        }else if (card.set.includes("補充包")) {
             sets["補充包"].add(card.set);
         }else if (card.set === "配件" || card.set === "PR卡"){
             sets["其他"].add(card.set);
