@@ -62,15 +62,7 @@ keywordSelect.innerHTML = '';
     // 設定預設為空值（選單本身保持空）
     keywordSelect.value = "";
 
-
-    // 填充屬性選項
-    attributes.forEach(attr => {
-        const option = document.createElement('option');
-        option.value = attr;
-        option.textContent = attr;
-        attributeSelect.appendChild(option);
-    });
-
+// 類型不用清空下拉選單
     // 填充類型選項
     types.forEach(type => {
         const option = document.createElement('option');
@@ -79,21 +71,47 @@ keywordSelect.innerHTML = '';
         typeSelect.appendChild(option);
     });
 
+// 清空屬性下拉選單
+attributeSelect.innerHTML = '';
+    // 填充屬性選項
+    attributes.forEach(attr => {
+        if (attr) {
+            const option = document.createElement('option');
+            option.value = attr;
+            option.textContent = attr;
+            attributeSelect.appendChild(option);
+        }
+    });
+    // 設定預設為空值（選單本身保持空）
+    attributeSelect.value = "";
+
+// 清空標籤下拉選單
+tagSelect.innerHTML = '';
     // 填充標籤選項
     tags.forEach(tag => {
-        const option = document.createElement('option');
-        option.value = tag;
-        option.textContent = tag;
-        tagSelect.appendChild(option);
+        if (tag) {
+            const option = document.createElement('option');
+            option.value = tag;
+            option.textContent = tag;
+            tagSelect.appendChild(option);
+        }
     });
+    // 設定預設為空值（選單本身保持空）
+    tagSelect.value = "";
 
+// 清空卡包下拉選單
+setSelect.innerHTML = '';
     // 填充卡包選項
     sets.forEach(set => {
-        const option = document.createElement('option');
-        option.value = set;
-        option.textContent = set;
-        setSelect.appendChild(option);
+        if (set) {
+            const option = document.createElement('option');
+            option.value = set;
+            option.textContent = set;
+            setSelect.appendChild(option);
+        }
     });
+    // 設定預設為空值（選單本身保持空）
+    setSelect.value = "";
 }
 
 // 根據篩選條件顯示卡牌
