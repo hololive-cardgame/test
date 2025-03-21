@@ -49,11 +49,6 @@ select#keyword {
     display: none;
 }
 
-select[multiple] {
-    height: 150px; /* 可根據需要調整高度 */
-    width: 100%;
-}
-
 .right-side {
     width: 75%;
     padding: 10px;
