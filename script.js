@@ -6,6 +6,7 @@ const typeSelect = document.getElementById('type');
 const attributeSelect = document.getElementById('attribute');
 const tagSelect = document.getElementById('tag');
 const setSelect = document.getElementById('set');
+const clearKeywordBtn = document.getElementById('clear-keyword');
 // 彈窗
 const cardModal = document.getElementById('card-modal');
 const closeModal = document.getElementById('close-modal');
@@ -187,7 +188,22 @@ document.getElementById('close-modal').addEventListener('click', () => {
 document.getElementById('filter-form').addEventListener('change', filterCards);
 
 // 監聽篩選條件變動，觸發篩選
-keywordSelect.addEventListener('change', filterCards);
+keywordSelect.addEventListener('change', (e) => {
+    // 顯示/隱藏 "X" 按鈕
+    if (e.target.value !== '') {
+        clearKeywordBtn.style.display = 'inline-block'; // 顯示 "X"
+    } else {
+        clearKeywordBtn.style.display = 'none'; // 隱藏 "X"
+    }
+    filterCards(); // 每次篩選條件改變後觸發篩選
+});
+
+// 清除關鍵字篩選
+clearKeywordBtn.addEventListener('click', () => {
+    keywordSelect.value = ''; // 清空選擇
+    clearKeywordBtn.style.display = 'none'; // 隱藏 "X" 按鈕
+    filterCards(); // 清除後重新篩選卡牌
+});
 typeSelect.addEventListener('change', filterCards);
 attributeSelect.addEventListener('change', filterCards);
 tagSelect.addEventListener('change', filterCards);
