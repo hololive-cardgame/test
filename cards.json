@@ -7,7 +7,8 @@
         "life": 5,
         "skill": "グリーンエンハンス",
         "spSkill": "Birthday Gift ～Green～",
-        "image": "images/hBD24-001_P.png"
+        "image": "images/hBD24-001_P.png",
+        "set": "PR卡"
     },
     {
         "id": "hBD24-006",
@@ -17,7 +18,8 @@
         "life": 5,
         "skill": "パープルエンハンス",
         "spSkill": "Birthday Gift ～Purple～",
-        "image": "images/hBD24-006_P.png"
+        "image": "images/hBD24-006_P.png",
+        "set": "補充包「エリートスパーク」"
     },
     {
         "id": "hBD24-007",
@@ -27,7 +29,8 @@
         "life": 5,
         "skill": "イエローエンハンス",
         "spSkill": "Birthday Gift ～Yellow～",
-        "image": "images/hBD24-007_P.png"
+        "image": "images/hBD24-007_P.png",
+        "set": "起始牌組「黄 不知火フレア」"
     },
     {
         "id": "hBP01-001",
@@ -37,7 +40,8 @@
         "life": 5,
         "skill": "ぎゅっぎゅっ",
         "spSkill": "握りつぶしちゃうぞ",
-        "image": "images/hBP01-001_OSR.png"
+        "image": "images/hBP01-001_OSR.png",
+        "set": "起始牌組「紫 癒月ちょこ」"
     },
     {
         "id": "hBP01-002",
@@ -47,7 +51,8 @@
         "life": 5,
         "skill": "文明の守護者",
         "spSkill": "アメイジング・ドローイング",
-        "image": "images/hBP01-002_OSR.png"
+        "image": "images/hBP01-002_OSR.png",
+        "set": "配件"
     },
     {
         "id": "hBP01-003",
@@ -57,7 +62,8 @@
         "life": 5,
         "skill": "サバイバルパワー",
         "spSkill": "大地の唄",
-        "image": "images/hBP01-003_OSR.png"
+        "image": "images/hBP01-003_OSR.png",
+        "set": "補充包「クインテットスペクトラム」」"
     },
     {
         "id": "hBP01-004",
