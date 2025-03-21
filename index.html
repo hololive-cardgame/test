@@ -1,82 +1,59 @@
 <!DOCTYPE html>
-<html lang="zh-Hant">
+<html lang="en">
 <head>
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
-    <title>卡牌展示網站</title>
-    <link rel="icon" href="favicon.ico">
-    <link rel="stylesheet" href="style.css">
+    <title>卡牌查詢網站</title>
+    <link rel="stylesheet" href="styles.css">
 </head>
 <body>
     <header>
-        <h1>卡牌展示</h1>
+        <h1>卡牌查詢</h1>
     </header>
-
     <main>
-        <aside id="filters">
-            <h2>篩選條件</h2>
-            <!-- 篩選條件表單 -->
+        <div class="left-side">
+            <!-- 篩選條件 -->
             <form id="filter-form">
-                <label for="keyword">關鍵字:</label>
-                <input type="text" id="keyword" name="keyword">
-                
-                <label for="type">類型:</label>
+                <label for="type">卡牌類型：</label>
                 <select id="type" name="type">
-                    <option value="">所有類型</option>
-                    <!-- 可根據需要添加選項 -->
+                    <option value="">選擇類型</option>
+                    <option value="magic">魔法</option>
+                    <option value="creature">生物</option>
+                    <option value="artifact">神器</option>
+                    <!-- 更多選項 -->
                 </select>
-                
-                <label for="attribute">屬性:</label>
-                <select id="attribute" name="attribute">
-                    <option value="">所有屬性</option>
-                    <!-- 可根據需要添加選項 -->
-                </select>
-
-                <label for="pack">卡包:</label>
-                <select id="pack" name="pack">
-                    <option value="">所有卡包</option>
-                    <!-- 可根據需要添加選項 -->
-                </select>
-
-                <button type="button" id="clear-filters">清除篩選條件</button>
+                <button type="submit">篩選</button>
             </form>
-        </aside>
-
-        <section id="card-gallery">
+        </div>
+        <div class="right-side">
             <!-- 卡牌展示區 -->
-            <div class="card-container" id="card-container">
-                <!-- 卡牌會通過JS動態加載 -->
+            <div id="card-container">
+                <!-- 卡牌會在這裡動態加載 -->
             </div>
-
+            <!-- 分頁按鈕 -->
             <div id="pagination">
-                <button id="prev-page">上一頁</button>
-                <span id="page-numbers"></span>
-                <button id="next-page">下一頁</button>
-            </div>
-        </section>
-    </main>
-
-    <div id="card-modal" class="modal">
-        <div class="modal-content">
-            <span id="close-modal" class="close-btn">X</span>
-            <div class="modal-body">
-                <div class="modal-left">
-                    <img id="modal-card-image" src="" alt="Card Image">
-                </div>
-                <div class="modal-right">
-                    <h2 id="modal-card-name">卡牌名稱</h2>
-                    <p id="modal-card-details">卡牌詳細描述</p>
-                </div>
-                <button id="prev-card" class="nav-btn">←</button>
-                <button id="next-card" class="nav-btn">→</button>
+                <button id="prev-btn">上一頁</button>
+                <button id="next-btn">下一頁</button>
             </div>
         </div>
+    </main>
+    <!-- 卡牌詳細彈窗 -->
+    <div id="card-modal" class="modal">
+        <div class="modal-content">
+            <div class="modal-left">
+                <img id="card-image" src="" alt="Card Image">
+            </div>
+            <div class="modal-right">
+                <h2 id="card-name">卡牌名稱</h2>
+                <p id="card-description">卡牌描述</p>
+                <!-- 更多詳細資料 -->
+            </div>
+            <button id="close-modal">關閉</button>
+        </div>
     </div>
-
     <footer>
-        <p>© 2025 卡牌展示網站</p>
+        <p>© 2025 卡牌查詢網站</p>
     </footer>
-
     <script src="script.js"></script>
 </body>
 </html>
