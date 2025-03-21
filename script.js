@@ -53,7 +53,7 @@ cardsData.forEach(card => {
         }else if (card.set === "補充包") {
             sets["補充包"].add(card.set);
         }else if (card.set === "配件" || card.set === "PR卡"){
-            sets["配件"].add(card.set);
+            sets["其他"].add(card.set);
         }
     }
 });
