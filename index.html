@@ -1,10 +1,12 @@
-<!--第一版-->
 <!DOCTYPE html>
-<html lang="en">
+<html lang="zh">
 <head>
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
     <title>卡牌查詢網站</title>
+    <!-- 標籤頁小圖示 -->
+    <link rel="icon" herf="icon.png" type="image/png">
+    <!-- 載入css -->
     <link rel="stylesheet" href="styles.css">
 </head>
 <body>
@@ -15,15 +17,38 @@
         <div class="left-side">
             <!-- 篩選條件 -->
             <form id="filter-form">
-                <label for="type">卡牌類型：</label>
-                <select id="type" name="type">
-                    <option value="">選擇類型</option>
-                    <option value="magic">魔法</option>
-                    <option value="creature">生物</option>
-                    <option value="artifact">神器</option>
-                    <!-- 更多選項 -->
+                <label fro="keyword">關鍵字</label>
+                <select id="keyword" name="keyword">
+                    <option value=""></option>
+                    <!-- 下拉選單選項會從 JSON 動態加載 -->
                 </select>
-                <button type="submit">篩選</button>
+                
+                <label for="type">類型</label>
+                <select id="type" name="type">
+                    <option value="">全部</option>
+                    <!-- 下拉選單選項會從 JSON 動態加載 -->
+                </select>
+
+                <label for="attribute">屬性</label>
+                <select id="attribute" name="attribute">
+                    <option value=""></option>
+                    <!-- 下拉選單選項會從 JSON 動態加載 -->
+                </select>
+                
+                <label for="tag">標籤</label>
+                <select id="tag" name="tag">
+                    <option value=""></option>
+                    <!-- 下拉選單選項會從 JSON 動態加載 -->
+                </select>
+                
+                <label for="set">卡包：</label>
+                <select id="set" name="set">
+                    <option value=""></option>
+                    <!-- 下拉選單選項會從 JSON 動態加載 -->
+                </select>
+                
+                <!-- 清除篩選按鈕 -->
+                <button type="button" id="clear-filters">清除篩選條件</button>
             </form>
         </div>
         <div class="right-side">
