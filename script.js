@@ -1,17 +1,19 @@
 // 取得所有的篩選選單元素
-const clearFiltersBtn = document.getElementById('clear-filters');
-const cardContainer = document.getElementById('card-container');
-const keywordSelect = document.getElementById('keyword');
-const typeSelect = document.getElementById('type');
-const attributeSelect = document.getElementById('attribute');
-const tagSelect = document.getElementById('tag');
-const setSelect = document.getElementById('set');
-const clearKeywordBtn = document.getElementById('clear-keyword');
-// 彈窗
+const clearFiltersBtn = document.getElementById('clear-filters');  // 清除篩選條件按鈕
+const cardContainer = document.getElementById('card-container');  // 卡牌展示區
+const keywordSelect = document.getElementById('keyword');  // 關鍵字
+const typeSelect = document.getElementById('type');  // 類型
+const attributeSelect = document.getElementById('attribute');  // 屬性
+const tagSelect = document.getElementById('tag');  // 標籤
+const setSelect = document.getElementById('set');  // 卡包
+const clearKeywordBtn = document.getElementById('clear-keyword');  // 關鍵字關閉按鈕
+
+// 彈窗 先不看
 const cardModal = document.getElementById('card-modal');
 const closeModal = document.getElementById('close-modal');
 
-let filteredCards = [];  // 篩選後的卡牌資料
+// 篩選後的卡牌資料
+let filteredCards = [];
 
 // 使用 fetch 從 JSON 檔案載入資料
 fetch('cards.json')
@@ -27,38 +29,38 @@ fetch('cards.json')
 
 // 根據 JSON 資料生成篩選選項
 function generateFilterOptions() {
-    const attributes = new Set();
+    const keywords = new Set();
     const types = new Set();
-    const tags = new Set();  // 假設你的卡牌資料裡會有標籤
-    const sets = new Set();  // 假設你的卡牌資料裡會有卡包
-    const keywords = new Set();  // 這是用來儲存卡牌名稱的集合
+    const attributes = new Set();
+    const tags = new Set();
+    const sets = new Set();
+    
+// 這是用來儲存卡牌名稱的集合
+cardsData.forEach(card => {
+    keywords.add(card.name);
+    types.add(card.type);
+    attributes.add(card.attribute);
+    if (card.tag) {
+        card.tag.split(' / ').forEach(tag => tags.add(tag));
+    }
+    if (card.set) {
+        sets.add(card.set);
+    }
+});
 
-    cardsData.forEach(card => {
-        attributes.add(card.attribute);
-        types.add(card.type);
-        if (card.tag) {
-            card.tag.split(' / ').forEach(tag => tags.add(tag));
-        }
-        if (card.set) {
-            sets.add(card.set);
-        }
-        // 填充關鍵字（卡牌名稱）
-        keywords.add(card.name);
-    });
-
-    // 清空下拉選單
-    keywordSelect.innerHTML = '';
+// 清空關鍵字下拉選單
+keywordSelect.innerHTML = '';
     // 填充關鍵字選項
     keywords.forEach(keyword => {
         if (keyword) {
             const option = document.createElement('option');
             option.value = keyword;
             option.textContent = keyword;
-            keywordSelect.appendChild(option);  // 假設你有關鍵字選單的 DOM 元素
+            keywordSelect.appendChild(option);
         }
     });
     // 設定預設為空值（選單本身保持空）
-    keywordSelect.value = "";  // 預設為空選項
+    keywordSelect.value = "";
 
 
     // 填充屬性選項
