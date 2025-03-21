@@ -1,4 +1,4 @@
-/* 第一版 */
+/* 第二版 */
 /* 一般樣式 */
 body {
     font-family: Arial, sans-serif;
@@ -21,6 +21,28 @@ main {
 .left-side {
     width: 25%;
     padding: 10px;
+}
+
+select#keyword {
+    width: 100%;
+    padding: 8px 40px 8px 10px;
+    border: 1px solid #ccc;
+    border-radius: 4px;
+    font-size: 14px;
+    background-color: #fff;
+    appearance: none;
+    position: relative;
+}
+
+.clear-button {
+    position: absolute;
+    right: 10px;
+    top: 50%;
+    transform: translateY(-50%);
+    cursor: pointer;
+    font-weight: bold;
+    color: red;
+    display: none;
 }
 
 .right-side {
