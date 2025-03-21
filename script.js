@@ -173,6 +173,12 @@ clearFiltersBtn.addEventListener('click', () => {
         tagSelect.value = '';
         setSelect.value = '';
         clearKeywordBtn.style.display = 'none'; // 隱藏 "X"
+
+        // 隱藏空值選項
+        const emptyOption = keywordSelect.querySelector('option[value=""]');
+        if (emptyOption) {
+            emptyOption.style.display = 'none';
+        }
         
         // 顯示所有卡牌
         displayCards(cardsData);
