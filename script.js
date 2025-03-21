@@ -32,6 +32,7 @@ function generateFilterOptions() {
     const types = new Set();
     const tags = new Set();  // 假設你的卡牌資料裡會有標籤
     const sets = new Set();  // 假設你的卡牌資料裡會有卡包
+    const keywords = new Set();  // 這是用來儲存卡牌名稱的集合
 
     cardsData.forEach(card => {
         attributes.add(card.attribute);
@@ -42,6 +43,16 @@ function generateFilterOptions() {
         if (card.set) {
             sets.add(card.set);
         }
+        // 填充關鍵字（卡牌名稱）
+        keywords.add(card.name);
+    });
+
+    // 填充關鍵字選項
+    keywords.forEach(keyword => {
+        const option = document.createElement('option');
+        option.value = keyword;
+        option.textContent = keyword;
+        keywordSelect.appendChild(option);  // 假設你有關鍵字選單的 DOM 元素
     });
 
     // 填充屬性選項
