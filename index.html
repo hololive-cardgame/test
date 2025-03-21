@@ -20,10 +20,13 @@
             <!-- 篩選條件 -->
             <form id="filter-form">
                 <label fro="keyword">關鍵字</label>
-                <select id="keyword" name="keyword">
-                    <option value=""></option>
-                    <!-- 下拉選單選項會從 JSON 動態加載 -->
-                </select>
+                <div id="keyword-container">
+                    <select id="keyword" name="keyword">
+                        <option value=""></option>
+                        <!-- 下拉選單選項會從 JSON 動態加載 -->
+                    </select>
+                    <span id="clear-keyword" class="clear-button" style="display: none;">X</span>
+                </div>
                 
                 <label for="type">類型</label>
                 <select id="type" name="type">
