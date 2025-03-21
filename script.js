@@ -55,6 +55,9 @@ function generateFilterOptions() {
         option.textContent = keyword;
         keywordSelect.appendChild(option);  // 假設你有關鍵字選單的 DOM 元素
     });
+    
+    // 這裡不添加空選項，而是讓 select 元素本身保持預設為空
+    keywordSelect.value = "";  // 預設為空
 
     // 填充屬性選項
     attributes.forEach(attr => {
