@@ -13,7 +13,7 @@ let cardData = [];  // 儲存所有卡牌資料
 let filteredCards = [];  // 篩選後的卡牌資料
 
 // 使用 fetch 從 JSON 檔案載入資料
-fetch('data/cards.json')
+fetch('cards.json')
     .then(response => response.json())  // 解析 JSON 資料
     .then(data => {
         cardsData = data;
