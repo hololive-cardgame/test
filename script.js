@@ -1,66 +1,76 @@
-// 讀取 JSON 卡牌資料
-fetch('cards.json')
-    .then(response => response.json())  // 解析 JSON
-    .then(data => {
-        // 一旦資料讀取完成，就呼叫 displayCards 顯示卡牌
-        const cards = data;
-        displayCards(cards);
-
-        // 進行篩選
-        document.getElementById('filter-form').addEventListener('submit', function(event) {
-            event.preventDefault();
-            const type = document.getElementById('type').value;
-            const filteredCards = cards.filter(card => {
-                return !type || card.type === type;
-            });
-            displayCards(filteredCards);
-        });
-    })
-    .catch(error => console.error('讀取卡牌資料失敗:', error));
-
-
-// 顯示卡牌的函數
-function displayCards(cards) {
+document.addEventListener('DOMContentLoaded', function() {
     const cardContainer = document.getElementById('card-container');
-    cardContainer.innerHTML = '';  // 清空之前顯示的卡牌
+    const filterForm = document.getElementById('filter-form');
+    const cardModal = document.getElementById('card-modal');
+    const closeModal = document.getElementById('close-modal');
 
-    cards.forEach(card => {
-        const cardElement = document.createElement('div');
-        cardElement.classList.add('card');
-        cardElement.setAttribute('data-id', card.id);  // 保存卡牌 ID，稍後用於彈窗顯示
+    let cardData = [];  // 儲存所有卡牌資料
+    let filteredCards = [];  // 篩選後的卡牌資料
 
-        const imgElement = document.createElement('img');
-        imgElement.src = card.imageUrl;
-        imgElement.alt = card.name;
+    // 假設從本地文件載入 JSON 資料
+    fetch('cards.json')
+        .then(response => response.json())
+        .then(data => {
+            cardData = data;
+            filteredCards = cardData;  // 初始時顯示所有卡牌
+            renderCards(filteredCards);
+        });
 
-        // 在卡牌上附加圖片
-        cardElement.appendChild(imgElement);
+    // 渲染卡牌
+    function renderCards(cards) {
+        cardContainer.innerHTML = '';  // 清空容器
+        cards.forEach(card => {
+            const cardDiv = document.createElement('div');
+            cardDiv.classList.add('card');
+            cardDiv.innerHTML = `<img src="${card.image}" alt="${card.name}">`;
+            cardDiv.addEventListener('click', () => showCardDetails(card));
+            cardContainer.appendChild(cardDiv);
+        });
+    }
 
-        // 當卡牌被點擊時，顯示彈窗
-        cardElement.addEventListener('click', () => openModal(card.id));
+    // 顯示卡牌詳細資料
+    function showCardDetails(card) {
+        document.getElementById('card-name').textContent = card.name;
+        document.getElementById('card-image').src = card.image;
+        document.getElementById('card-description').textContent = card.description;
+        cardModal.style.display = 'block';
+    }
 
-        // 把卡牌添加到容器中
-        cardContainer.appendChild(cardElement);
+    // 關閉彈窗
+    closeModal.addEventListener('click', () => {
+        cardModal.style.display = 'none';
     });
-}
 
-// 顯示彈窗，顯示卡牌詳細資料
-function openModal(cardId) {
-    const card = cards.find(card => card.id === cardId);
-    const modal = document.getElementById('card-modal');
-    const modalImage = document.getElementById('modal-image');
-    const modalName = document.getElementById('modal-name');
-    const modalDescription = document.getElementById('modal-description');
-
-    // 更新彈窗內容
-    modalImage.src = card.imageUrl;
-    modalName.textContent = card.name;
-    modalDescription.textContent = card.description;
-
-    modal.style.display = 'block';
-}
-
-// 關閉彈窗
-document.getElementById('close-modal').addEventListener('click', () => {
-    document.getElementById('card-modal').style.display = 'none';
+    // 篩選功能
+    filterForm.addEventListener('submit', function(event) {
+        event.preventDefault();
+        const filterType = document.getElementById('type').value;
+        if (filterType) {
+            filteredCards = cardData.filter(card => card.type === filterType);
+        } else {
+            filteredCards = cardData;
+        }
+        renderCards(filteredCards);
+    });
 });
+
+let currentPage = 1;
+const cardsPerPage = 10;
+
+function renderPagination(cards) {
+    const totalPages = Math.ceil(cards.length / cardsPerPage);
+    const prevBtn = document.getElementById('prev-btn');
+    const nextBtn = document.getElementById('next-btn');
+
+    prevBtn.disabled = currentPage === 1;
+    nextBtn.disabled = currentPage === totalPages;
+
+    prevBtn.onclick = () => changePage(currentPage - 1, cards);
+    nextBtn.onclick = () => changePage(currentPage + 1, cards);
+}
+
+function changePage(page, cards) {
+    currentPage = page;
+    renderCards(cards.slice((currentPage - 1) * cardsPerPage, currentPage * cardsPerPage));
+    renderPagination(cards);
+}
