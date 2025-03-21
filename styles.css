@@ -1,4 +1,3 @@
-/* 第二版 */
 /* 一般樣式 */
 body {
     font-family: Arial, sans-serif;
@@ -48,6 +47,11 @@ select#keyword {
     font-weight: bold;
     color: red;
     display: none;
+}
+
+select[multiple] {
+    height: 150px; /* 可根據需要調整高度 */
+    width: 100%;
 }
 
 .right-side {
