@@ -33,7 +33,11 @@ function generateFilterOptions() {
     const types = new Set();
     const attributes = new Set();
     const tags = new Set();
-    const sets = new Set();
+    const sets = {
+        "起始牌組": new Set();
+        "補充包": new Set();
+        "其他": new Set();
+    };
     
 // 這是用來儲存卡牌名稱的集合
 cardsData.forEach(card => {
@@ -44,7 +48,13 @@ cardsData.forEach(card => {
         card.tag.split(' / ').forEach(tag => tags.add(tag));
     }
     if (card.set) {
-        sets.add(card.set);
+        if (card.set === "起始牌組") {
+            sets["起始牌組"].add(card.set);
+        }else if (card.set === "補充包") {
+            sets["補充包"].add(card.set);
+        }else if (card.set === "配件" || card.set === "PR卡"){
+            sets["配件"].add(card.set);
+        }
     }
 });
 
@@ -102,13 +112,20 @@ tagSelect.innerHTML = '';
 // 清空卡包下拉選單
 setSelect.innerHTML = '';
     // 填充卡包選項
-    sets.forEach(set => {
-        if (set) {
+   Object.keys(sets).forEach(category => {
+        const optgroup = document.createElement('optgroup');
+        optgroup.label = category; // 設置分組標籤
+        
+        // 添加該分類下的所有卡包選項
+        sets[category].forEach(set => {
             const option = document.createElement('option');
             option.value = set;
             option.textContent = set;
-            setSelect.appendChild(option);
-        }
+            optgroup.appendChild(option);
+        });
+
+        // 把分組添加到 select 元素中
+        setSelect.appendChild(optgroup);
     });
     // 設定預設為空值（選單本身保持空）
     setSelect.value = "";
