@@ -11,8 +11,6 @@ const clearKeywordBtn = document.getElementById('clear-keyword');
 const cardModal = document.getElementById('card-modal');
 const closeModal = document.getElementById('close-modal');
 
-
-// let cardData = [];  // 儲存所有卡牌資料
 let filteredCards = [];  // 篩選後的卡牌資料
 
 // 使用 fetch 從 JSON 檔案載入資料
@@ -55,9 +53,6 @@ function generateFilterOptions() {
         option.textContent = keyword;
         keywordSelect.appendChild(option);  // 假設你有關鍵字選單的 DOM 元素
     });
-    
-    // 這裡不添加空選項，而是讓 select 元素本身保持預設為空
-    keywordSelect.value = "";  // 預設為空
 
     // 填充屬性選項
     attributes.forEach(attr => {
@@ -161,14 +156,24 @@ function displayCards(cards) {
 
 // 清除篩選條件
 clearFiltersBtn.addEventListener('click', () => {
-    keywordSelect.value = '';
-    typeSelect.value = '';
-    attributeSelect.value = '';
-    tagSelect.value = '';
-    setSelect.value = '';
+    // 檢查是否有任何篩選條件被選擇
+    const isAnyFilterSelected = keywordSelect.value ||
+                                typeSelect.value ||
+                                attributeSelect.value ||
+                                tagSelect.value ||
+                                setSelect.value;
+    if (isAnyFilterSelected) {
+        // 如果有篩選條件被選擇，則清除所有篩選條件
+        keywordSelect.value = '';
+        typeSelect.value = '';
+        attributeSelect.value = '';
+        tagSelect.value = '';
+        setSelect.value = '';
+        clearKeywordBtn.style.display = 'none'; // 隱藏 "X"
     
-    // 顯示所有卡牌
-    displayCards(cardsData);
+        // 顯示所有卡牌
+        displayCards(cardsData);
+    }
 });
 
 // 顯示卡牌詳細資訊
