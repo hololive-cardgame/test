@@ -1,60 +1,81 @@
 <!DOCTYPE html>
-<html lang="en">
+<html lang="zh-Hant">
 <head>
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
-    <title>hololive卡牌查詢資料庫</title>
-    <link rel="icon" href="icon.png" type="image/png">
-    <link rel="stylesheet" href="styles.css">
+    <title>卡牌展示網站</title>
+    <link rel="icon" href="favicon.ico">
+    <link rel="stylesheet" href="style.css">
 </head>
 <body>
-    <!-- Header 部分 -->
     <header>
-        <h1>hololive卡牌查詢</h1>
+        <h1>卡牌展示</h1>
     </header>
 
-    <!-- 主要內容部分 -->
     <main>
-        <div class="container">
-            <!-- 篩選條件區 -->
-            <div class="filter-container">
-                <h2>篩選條件</h2>
-                <form id="filter-form">
-                    <label for="type">卡牌類型:</label>
-                    <select id="type">
-                        <option value="">所有</option>
-                        <option value="type1">類型1</option>
-                        <option value="type2">類型2</option>
-                        <option value="type3">類型3</option>
-                    </select>
-                    <button type="submit">篩選</button>
-                </form>
+        <aside id="filters">
+            <h2>篩選條件</h2>
+            <!-- 篩選條件表單 -->
+            <form id="filter-form">
+                <label for="keyword">關鍵字:</label>
+                <input type="text" id="keyword" name="keyword">
+                
+                <label for="type">類型:</label>
+                <select id="type" name="type">
+                    <option value="">所有類型</option>
+                    <!-- 可根據需要添加選項 -->
+                </select>
+                
+                <label for="attribute">屬性:</label>
+                <select id="attribute" name="attribute">
+                    <option value="">所有屬性</option>
+                    <!-- 可根據需要添加選項 -->
+                </select>
+
+                <label for="pack">卡包:</label>
+                <select id="pack" name="pack">
+                    <option value="">所有卡包</option>
+                    <!-- 可根據需要添加選項 -->
+                </select>
+
+                <button type="button" id="clear-filters">清除篩選條件</button>
+            </form>
+        </aside>
+
+        <section id="card-gallery">
+            <!-- 卡牌展示區 -->
+            <div class="card-container" id="card-container">
+                <!-- 卡牌會通過JS動態加載 -->
             </div>
 
-            <!-- 卡牌顯示區 -->
-            <div id="card-container" class="card-container"></div>
-        </div>
+            <div id="pagination">
+                <button id="prev-page">上一頁</button>
+                <span id="page-numbers"></span>
+                <button id="next-page">下一頁</button>
+            </div>
+        </section>
     </main>
-
-    <!-- Footer 部分 -->
-    <footer>
-        <p>版權所有規hololive official card game</p>
-    </footer>
 
     <div id="card-modal" class="modal">
         <div class="modal-content">
-            <span id="close-modal" class="close">&times;</span>
-            <div id="modal-card-detail">
-                <img id="modal-image" src="" alt="卡牌圖片">
-                <h3 id="modal-name"></h3>
-                <p id="modal-description"></p>
-            </div>
-            <div class="modal-nav">
-                <button id="prev-card">&lt;</button>
-                <button id="next-card">&gt;</button>
+            <span id="close-modal" class="close-btn">X</span>
+            <div class="modal-body">
+                <div class="modal-left">
+                    <img id="modal-card-image" src="" alt="Card Image">
+                </div>
+                <div class="modal-right">
+                    <h2 id="modal-card-name">卡牌名稱</h2>
+                    <p id="modal-card-details">卡牌詳細描述</p>
+                </div>
+                <button id="prev-card" class="nav-btn">←</button>
+                <button id="next-card" class="nav-btn">→</button>
             </div>
         </div>
     </div>
+
+    <footer>
+        <p>© 2025 卡牌展示網站</p>
+    </footer>
 
     <script src="script.js"></script>
 </body>
