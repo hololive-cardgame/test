@@ -48,11 +48,17 @@ function generateFilterOptions() {
 
     // 填充關鍵字選項
     keywords.forEach(keyword => {
-        const option = document.createElement('option');
-        option.value = keyword;
-        option.textContent = keyword;
-        keywordSelect.appendChild(option);  // 假設你有關鍵字選單的 DOM 元素
+        if (keyword) {
+            const option = document.createElement('option');
+            option.value = keyword;
+            option.textContent = keyword;
+            keywordSelect.appendChild(option);  // 假設你有關鍵字選單的 DOM 元素
+        }
     });
+
+    // 設定預設為空值（選單本身保持空）
+    keywordSelect.value = "";  // 預設為空選項
+
 
     // 填充屬性選項
     attributes.forEach(attr => {
