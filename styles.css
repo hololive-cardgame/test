@@ -23,6 +23,10 @@ main {
     padding: 10px;
 }
 
+#keyword-container {
+    position: relative;
+}
+
 select#keyword {
     width: 100%;
     padding: 8px 40px 8px 10px;
@@ -36,6 +40,7 @@ select#keyword {
 
 .clear-button {
     position: absolute;
+    font-size: 20px;
     right: 10px;
     top: 50%;
     transform: translateY(-50%);
