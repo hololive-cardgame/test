@@ -118,19 +118,19 @@ setSelect.innerHTML = '';
 function filterCards() {
     const keyword = keywordSelect.value.toLowerCase();
     const type = typeSelect.value;
-    const attribute = attributeSelect.value;
-    const tag = tagSelect.value;
-    const set = setSelect.value;
+    const selectedAttributes = Array.from(attributeSelect.selectedOptions).map(option => option.value);
+    const selectedTags = Array.from(tagSelect.selectedOptions).map(option => option.value);
+    const selectedSets = Array.from(setSelect.selectedOptions).map(option => option.value);
 
     const filteredCards = cardsData.filter(card => {
         const matchesKeyword = card.name.toLowerCase().includes(keyword);
         const matchesType = type ? card.type === type : true;
-        const matchesAttribute = attribute ? card.attribute === attribute : true;
+        const matchesAttributes = selectedAttributes.length === 0 || selectedAttributes.includes(card.attribute);
         // 處理 tag 的篩選
-        const matchesTag = tag ? card.tag && card.tag.split(' / ').includes(tag) : true;
-        const matchesSet = set ? card.set === set : true;
+        const matchesTags = selectedTags.length === 0 || selectedTags.some(tag => card.tag && card.tag.split(' / ').includes(tag));
+        const matchesSets = selectedSets.length === 0 || selectedSets.includes(card.set);
 
-        return matchesKeyword && matchesType && matchesAttribute && matchesTag && matchesSet;
+        return matchesKeyword && matchesType && matchesAttributes && matchesTags && matchesSets;
     });
 
     // 去重邏輯：基於卡牌的所有篩選條件去重
@@ -202,6 +202,11 @@ clearFiltersBtn.addEventListener('click', () => {
         displayCards(cardsData);
     }
 });
+
+
+
+
+
 
 // 顯示卡牌詳細資訊
 function showCardModal(card) {
