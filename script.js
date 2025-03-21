@@ -158,32 +158,14 @@ function displayCards(cards) {
 
 // 清除篩選條件
 clearFiltersBtn.addEventListener('click', () => {
-    // 檢查是否有任何篩選條件被選擇
-    const isAnyFilterSelected = keywordSelect.value ||
-                                typeSelect.value ||
-                                attributeSelect.value ||
-                                tagSelect.value ||
-                                setSelect.value;
-
-    if (isAnyFilterSelected) {
-        // 如果有篩選條件被選擇，則清除所有篩選條件
-        keywordSelect.value = '';
-        typeSelect.value = '';
-        attributeSelect.value = '';
-        tagSelect.value = '';
-        setSelect.value = '';
-        clearKeywordBtn.style.display = 'none'; // 隱藏 "X"
-
-        // 隱藏空值選項
-        const emptyOption = keywordSelect.querySelector('option[value=""]');
-        if (emptyOption) {
-            emptyOption.style.display = 'none';
-        }
-        
-        // 顯示所有卡牌
-        displayCards(cardsData);
-    }
-
+    keywordSelect.value = '';
+    typeSelect.value = '';
+    attributeSelect.value = '';
+    tagSelect.value = '';
+    setSelect.value = '';
+    
+    // 顯示所有卡牌
+    displayCards(cardsData);
 });
 
 // 顯示卡牌詳細資訊
