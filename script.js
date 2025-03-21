@@ -1,123 +1,122 @@
-document.addEventListener('DOMContentLoaded', function() {
-    const cardContainer = document.getElementById('card-container');    //卡牌展示
-    const filterForm = document.getElementById('filter-form');    //篩選
-    const keywordSelect = document.getElementById('keyword');
-    const typeSelect = document.getElementById('type');
-    const attributeSelect = document.getElementById('attribute');
-    const tagSelect = document.getElementById('tag');
-    const setSelect = document.getElementById('set');
-    // 彈窗
-    const cardModal = document.getElementById('card-modal');
-    const closeModal = document.getElementById('close-modal');
+// 取得所有的篩選選單元素
+const keywordSelect = document.getElementById('keyword');
+const typeSelect = document.getElementById('type');
+const attributeSelect = document.getElementById('attribute');
+const tagSelect = document.getElementById('tag');
+const setSelect = document.getElementById('set');
+const cardContainer = document.getElementById('card-container');
+// 彈窗
+const cardModal = document.getElementById('card-modal');
+const closeModal = document.getElementById('close-modal');
 
-    let cardData = [];  // 儲存所有卡牌資料
-    let filteredCards = [];  // 篩選後的卡牌資料
+let cardData = [];  // 儲存所有卡牌資料
+let filteredCards = [];  // 篩選後的卡牌資料
 
-    // 假設從本地文件載入 JSON 資料
-    fetch('cards.json')
-        .then(response => response.json())
-        .then(data => {
-            cardData = data;
-            filteredCards = cardData;  // 初始時顯示所有卡牌
-            renderCards(filteredCards);
-            populateSelectOptions(cardData);  // 填充所有篩選選單
-        });
+// 使用 fetch 從 JSON 檔案載入資料
+fetch('data/cards.json')
+    .then(response => response.json())  // 解析 JSON 資料
+    .then(data => {
+        cardsData = data;
+        generateFilterOptions();  // 生成篩選選項
+        displayCards(cardsData);  // 顯示所有卡牌
+    })
+    .catch(error => {
+        console.error('Error loading the card data:', error);
+    });
 
-    // 動態填充所有篩選選單（關鍵字、類型、屬性、標籤、卡包）
-    function populateSelectOptions(cards) {
-        const names = new Set();
-        const types = new Set();
-        const attributes = new Set();
-        const tags = new Set();
-        const sets = new Set();
+// 根據 JSON 資料生成篩選選項
+function generateFilterOptions() {
+    const attributes = new Set();
+    const types = new Set();
+    const tags = new Set();  // 假設你的卡牌資料裡會有標籤
+    const sets = new Set();  // 假設你的卡牌資料裡會有卡包
 
-        cards.forEach(card => {
-            names.add(card.name);
-            types.add(card.type);
-            attributes.add(card.attribute);
-            tags.add(card.tag));
+    cardsData.forEach(card => {
+        attributes.add(card.attribute);
+        types.add(card.type);
+        if (card.tag) {
+            card.tag.split(' / ').forEach(tag => tags.add(tag));
+        }
+        if (card.set) {
             sets.add(card.set);
+        }
+    });
+
+    // 填充屬性選項
+    attributes.forEach(attr => {
+        const option = document.createElement('option');
+        option.value = attr;
+        option.textContent = attr;
+        attributeSelect.appendChild(option);
+    });
+
+    // 填充類型選項
+    types.forEach(type => {
+        const option = document.createElement('option');
+        option.value = type;
+        option.textContent = type;
+        typeSelect.appendChild(option);
+    });
+
+    // 填充標籤選項
+    tags.forEach(tag => {
+        const option = document.createElement('option');
+        option.value = tag;
+        option.textContent = tag;
+        tagSelect.appendChild(option);
+    });
+
+    // 填充卡包選項
+    sets.forEach(set => {
+        const option = document.createElement('option');
+        option.value = set;
+        option.textContent = set;
+        setSelect.appendChild(option);
+    });
+}
+
+// 根據篩選條件顯示卡牌
+function filterCards() {
+    const keyword = keywordSelect.value.toLowerCase();
+    const type = typeSelect.value;
+    const attribute = attributeSelect.value;
+    const tag = tagSelect.value;
+    const set = setSelect.value;
+
+    const filteredCards = cardsData.filter(card => {
+        const matchesKeyword = card.name.toLowerCase().includes(keyword);
+        const matchesType = type ? card.type === type : true;
+        const matchesAttribute = attribute ? card.attribute === attribute : true;
+        const matchesTag = tag ? card.tag && card.tag.includes(tag) : true;
+        const matchesSet = set ? card.set === set : true;
+
+        return matchesKeyword && matchesType && matchesAttribute && matchesTag && matchesSet;
+    });
+
+    displayCards(filteredCards);
+}
+
+// 顯示卡牌
+function displayCards(cards) {
+    cardContainer.innerHTML = ''; // 清空現有卡牌
+
+    cards.forEach(card => {
+        const cardElement = document.createElement('div');
+        cardElement.classList.add('card');
+        cardElement.innerHTML = `
+            <img src="${card.image}" alt="${card.name}">
+            <h3>${card.name}</h3>
+            <p>${card.skill}</p>
+        `;
+
+        // 點擊卡牌展示詳細資訊
+        cardElement.addEventListener('click', () => {
+            showCardModal(card);
         });
 
-        // 填充關鍵字選單
-        populateSelect(keywordSelect, Array.from(names));
-
-        // 填充類型選單
-        populateSelect(typeSelect, Array.from(types));
-
-        // 填充屬性選單
-        populateSelect(attributeSelect, Array.from(attributes));
-
-        // 填充標籤選單
-        populateSelect(featureSelect, Array.from(tags));
-
-        // 填充卡包選單
-        populateSelect(setSelect, Array.from(sets));
-    }
-
-    // 通用函數，將一個數組的選項填充到下拉選單中
-    function populateSelect(selectElement, options) {
-        selectElement.innerHTML = '<option value="">選擇...</option>';  // 清空現有選項
-        options.forEach(optionValue => {
-            const option = document.createElement('option');
-            option.value = optionValue;
-            option.textContent = optionValue;
-            selectElement.appendChild(option);
-        });
-    }
-
-    // 篩選功能
-    function filterCards() {
-        let filtered = cardData;
-
-        // 關鍵字篩選
-        const keyword = keywordSelect.value.toLowerCase();
-        if (keyword) {
-            filtered = filtered.filter(card =>
-                card.name.toLowerCase().includes(keyword) ||
-                card.description.toLowerCase().includes(keyword)
-            );
-        }
-
-        // 類型篩選
-        const type = typeSelect.value;
-        if (type) {
-            filtered = filtered.filter(card => card.type === type);
-        }
-
-        // 屬性篩選
-        const attribute = attributeSelect.value;
-        if (attribute) {
-            filtered = filtered.filter(card => card.attribute === attribute);
-        }
-
-        // 標籤篩選
-        const tag = tagSelect.value;
-        if (tag) {
-            filtered = filtered.filter(card => card.tag === tag);
-        }
-
-        // 卡包篩選
-        const set = setSelect.value;
-        if (set) {
-            filtered = filtered.filter(card => card.set === set);
-        }
-
-        filteredCards = filtered;
-        renderCards(filteredCards);
-    }
-
-    // 渲染卡牌
-    function renderCards(cards) {
-        cardContainer.innerHTML = '';  // 清空容器
-        cards.forEach(card => {
-            const cardDiv = document.createElement('div');
-            cardDiv.classList.add('card');
-            cardDiv.innerHTML = `<img src="${card.image}" alt="${card.name}">`;
-            cardDiv.addEventListener('click', () => showCardDetails(card));
-            cardContainer.appendChild(cardDiv);
-        });
-    }
+        cardContainer.appendChild(cardElement);
+    });
+}
 
     // 清除篩選條件
     clearFiltersButton.addEventListener('click', function() {
@@ -130,26 +129,33 @@ document.addEventListener('DOMContentLoaded', function() {
         renderCards(filteredCards);
     });
 
-    // 監聽篩選條件的改變，並動態更新卡牌
-    keywordSelect.addEventListener('change', filterCards);
-    typeSelect.addEventListener('change', filterCards);
-    attributeSelect.addEventListener('change', filterCards);
-    tagSelect.addEventListener('change', filterCards);
-    setSelect.addEventListener('change', filterCards);
+// 顯示卡牌詳細資訊
+function showCardModal(card) {
+    const modal = document.getElementById('card-modal');
+    document.getElementById('card-image').src = card.image;
+    document.getElementById('card-name').textContent = card.name;
+    document.getElementById('card-description').textContent = `Life: ${card.life}\nSkill: ${card.skill}\nSpecial Skill: ${card.spSkill}`;
 
-    // 顯示卡牌詳細資料
-    function showCardDetails(card) {
-        document.getElementById('card-name').textContent = card.name;
-        document.getElementById('card-image').src = card.image;
-        document.getElementById('card-description').textContent = card.description;
-        cardModal.style.display = 'block';
-    }
+    modal.style.display = 'block';
+}
 
-    // 關閉彈窗
-    closeModal.addEventListener('click', () => {
-        cardModal.style.display = 'none';
-    });
-    
+// 關閉彈窗
+document.getElementById('close-modal').addEventListener('click', () => {
+    document.getElementById('card-modal').style.display = 'none';
+});
+
+// 初始時生成篩選選項並顯示所有卡牌
+// (這部分會在 fetch 成功後自動執行)
+document.getElementById('filter-form').addEventListener('change', filterCards);
+
+// 監聽清除篩選條件按鈕
+document.getElementById('clear-filters').addEventListener('click', () => {
+    keywordSelect.value = '';
+    typeSelect.value = '';
+    attributeSelect.value = '';
+    tagSelect.value = '';
+    setSelect.value = '';
+    filterCards();
 });
 
 let currentPage = 1;
