@@ -167,7 +167,7 @@ function removeDuplicates(cards) {
 
     cards.forEach(card => {
         // 使用一個唯一的識別符來檢查是否已經處理過該卡牌
-        const uniqueKey = `${card.name}-${card.type}-${card.attribute}-${card.tag || ''}`;
+        const uniqueKey = `${card.name}-${card.type}-${card.attribute}-${card.tag}-${card.set}`;
         
         if (!seen.has(uniqueKey)) {
             seen.add(uniqueKey);
