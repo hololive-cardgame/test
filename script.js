@@ -1,7 +1,7 @@
 // 取得所有的篩選選單元素
 const clearFiltersBtn = document.getElementById('clear-filters');  // 清除篩選條件按鈕
 const cardContainer = document.getElementById('card-container');  // 卡牌展示區
-const keywordSelect = document.getElementById('keyword-list');  // 關鍵字
+const keywordSelect = document.getElementById('keyword');  // 關鍵字
 const typeSelect = document.getElementById('type');  // 類型
 // const attributeSelect = document.getElementById('attribute');  // 屬性
 const tagSelect = document.getElementById('tag');  // 標籤
@@ -62,15 +62,12 @@ cardsData.forEach(card => {
 keywordSelect.innerHTML = '';
     // 填充關鍵字選項
     keywords.forEach(keyword => {
-        const li = document.createElement('li');
-        li.textContent = keyword;
-        li.addEventListener('click', () => {
-            document.querySelector('#custom-select-keyword .selected-value').textContent = keyword;
-            document.getElementById('keyword-list').style.display = 'none';
-            document.getElementById('clear-keyword').style.display = 'inline-block';
-            filterCards();
-        });
-        keywordSelect.appendChild(li);
+        if (keyword) {
+            const option = document.createElement('option');
+            option.value = keyword;
+            option.textContent = keyword;
+            keywordSelect.appendChild(option);
+        }
     });
     // 設定預設為空值（選單本身保持空）
     keywordSelect.value = "";
@@ -138,7 +135,7 @@ setSelect.innerHTML = '';
 
 // 根據篩選條件顯示卡牌
 function filterCards() {
-    const keyword = document.querySelector('#keyword-container .selected-value').textContent.toLowerCase();
+    const keyword = keywordSelect.value.toLowerCase();
     const type = typeSelect.value;
     const selectedAttributes = Array.from(document.querySelectorAll('input[name="attribute"]:checked')).map(checkbox => checkbox.value);
     const tag = tagSelect.value;
@@ -214,8 +211,6 @@ clearFiltersBtn.addEventListener('click', () => {
     if (isAnyFilterSelected) {
         // 如果有篩選條件被選擇，則清除所有篩選條件
         keywordSelect.value = '';
-        document.querySelector('#custom-select-keyword .selected-value').textContent = '選擇關鍵字'; // 更新顯示的文字
-        clearKeywordBtn.style.display = 'none'; // 隱藏 "X" 按鈕
         typeSelect.value = '';
         
         // 清除所有屬性篩選框的選擇
@@ -253,9 +248,6 @@ document.getElementById('close-modal').addEventListener('click', () => {
 document.getElementById('filter-form').addEventListener('change', filterCards);
 
 // 監聽篩選條件變動，觸發篩選
-document.querySelector('#custom-select-keyword .selected-value').addEventListener('click', () => {
-    keywordSelect.style.display = keywordSelect.style.display === 'block' ? 'none' : 'block';
-});
 keywordSelect.addEventListener('change', (e) => {
     // 顯示/隱藏 "X" 按鈕
     if (e.target.value !== '') {
@@ -268,7 +260,7 @@ keywordSelect.addEventListener('change', (e) => {
 
 // 清除關鍵字篩選
 clearKeywordBtn.addEventListener('click', () => {
-    document.querySelector('#keyword-container .selected-value').textContent = '選擇關鍵字';
+    keywordSelect.value = ''; // 清空選擇
     clearKeywordBtn.style.display = 'none'; // 隱藏 "X" 按鈕
     filterCards(); // 清除後重新篩選卡牌
 });
