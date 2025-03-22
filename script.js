@@ -207,7 +207,7 @@ clearFiltersBtn.addEventListener('click', () => {
     // 檢查是否有任何篩選條件被選擇
     const isAnyFilterSelected = keywordSelect.value ||
                                 typeSelect.value ||
-                                Array.from(document.querySelectorAll('input[name="attribute"]')).some(checkbox => checkbox.checked);
+                                Array.from(document.querySelectorAll('input[name="attribute"]')).some(checkbox => checkbox.checked) ||
                                 tagSelect.value ||
                                 setSelect.value;
     if (isAnyFilterSelected) {
