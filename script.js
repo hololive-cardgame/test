@@ -70,8 +70,7 @@ keywordSelect.innerHTML = '';
         }
     });
     // 設定預設為空值（選單本身保持空）
-    $('#keyword').val("");
-    $('#keyword').trigger('change');
+    keywordSelect.value = "";
 
 // 類型不用清空下拉選單
     // 填充類型選項
@@ -132,23 +131,11 @@ setSelect.innerHTML = '';
     });
     // 設定預設為空值（選單本身保持空）
     setSelect.value = "";
-
-    // 初始化 Select2
-      $(document).ready(function() {
-    // 初始化 Select2
-    $('#keyword').select2({
-        // allowClear: true,  // 允許清除選項
-        // placeholder: '請選擇',  // 提示文本
-        // width: '100%'  // 調整下拉框寬度
-        minimumInputLength: Infinity
-    });
-});
-
 }
 
 // 根據篩選條件顯示卡牌
 function filterCards() {
-    const keyword = $('#keyword').val().toLowerCase();
+    const keyword = keywordSelect.value.toLowerCase();
     const type = typeSelect.value;
     const selectedAttributes = Array.from(document.querySelectorAll('input[name="attribute"]:checked')).map(checkbox => checkbox.value);
     const tag = tagSelect.value;
@@ -216,15 +203,14 @@ function displayCards(cards) {
 // 清除篩選條件
 clearFiltersBtn.addEventListener('click', () => {
     // 檢查是否有任何篩選條件被選擇
-    const isAnyFilterSelected = $('#keyword').val() ||
+    const isAnyFilterSelected = keywordSelect.value ||
                                 typeSelect.value ||
                                 Array.from(document.querySelectorAll('input[name="attribute"]')).some(checkbox => checkbox.checked) ||
                                 tagSelect.value ||
                                 setSelect.value;
     if (isAnyFilterSelected) {
         // 如果有篩選條件被選擇，則清除所有篩選條件
-       $('#keyword').val("");
-        $('#keyword').trigger('change');
+        keywordSelect.value = '';
         typeSelect.value = '';
         
         // 清除所有屬性篩選框的選擇
@@ -262,7 +248,7 @@ document.getElementById('close-modal').addEventListener('click', () => {
 document.getElementById('filter-form').addEventListener('change', filterCards);
 
 // 監聽篩選條件變動，觸發篩選
-$('#keyword').on('change', (e) => {
+keywordSelect.addEventListener('change', (e) => {
     // 顯示/隱藏 "X" 按鈕
     if (e.target.value !== '') {
         clearKeywordBtn.style.display = 'inline-block'; // 顯示 "X"
@@ -274,8 +260,7 @@ $('#keyword').on('change', (e) => {
 
 // 清除關鍵字篩選
 clearKeywordBtn.addEventListener('click', () => {
-    $('#keyword').val(""); // 清空選擇
-    $('#keyword').trigger('change');
+    keywordSelect.value = ''; // 清空選擇
     clearKeywordBtn.style.display = 'none'; // 隱藏 "X" 按鈕
     filterCards(); // 清除後重新篩選卡牌
 });
