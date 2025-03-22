@@ -269,23 +269,6 @@ document.getElementById('attribute-filters').addEventListener('change', filterCa
 tagSelect.addEventListener('change', filterCards);
 setSelect.addEventListener('change', filterCards);
 
-// 測試
-$("#keyword>option").click(function
-$("#keyword").removeAttr("size");
-$("#keyword").css("height","" ;
-$("#keyword").blur();
-this.attr("selected", "");
-
-});
-$("#keyword").focus(function() {
-$("#keyword").attr("size","5");
-$("#keyword").css("height", "auto");
-});
-$("#keyword").blur(function () {
-$("#keyword").removeAttr("size");
-$("#keyword").css("height","");
-});
-
 let currentPage = 1;
 const cardsPerPage = 10;
 
