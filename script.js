@@ -71,6 +71,9 @@ keywordSelect.innerHTML = '';
     });
     // 設定預設為空值（選單本身保持空）
     keywordSelect.value = "";
+    // 強制觸發滾動條顯示
+    keywordSelect.style.maxHeight = '20px'; // 根據需要設置最大高度
+    keywordSelect.style.overflowY = 'auto';
 
 // 類型不用清空下拉選單
     // 填充類型選項
