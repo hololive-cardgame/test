@@ -136,9 +136,10 @@ setSelect.innerHTML = '';
    $(document).ready(function() {
     if (!$('#keyword').hasClass('select2-hidden-accessible')) {  // 確保沒有重複初始化
         $('#keyword').select2({
-            allowClear: true,  // 允許清除選項
-            placeholder: '請選擇關鍵字',
-            width: '100%'  // 調整下拉框寬度
+            // allowClear: true,  // 允許清除選項
+            // placeholder: '請選擇關鍵字',
+            // width: '100%',  // 調整下拉框寬度
+            tags: false
         });
     }
 });
