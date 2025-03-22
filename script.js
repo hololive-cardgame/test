@@ -21,7 +21,7 @@ fetch('cards.json')
     .then(data => {
         cardsData = data;
         generateFilterOptions();  // 生成篩選選項
-        generateSelectOptions("keyword", data.keywords);  // 載入關鍵字選項
+        generateSelectOptions("keyword", cards.keywords);  // 載入關鍵字選項
         displayCards(cardsData);  // 顯示所有卡牌
     })
     .catch(error => {
