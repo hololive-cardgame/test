@@ -207,14 +207,16 @@ clearFiltersBtn.addEventListener('click', () => {
     // 檢查是否有任何篩選條件被選擇
     const isAnyFilterSelected = keywordSelect.value ||
                                 typeSelect.value ||
-                                attributeSelect.value ||
+                                attributeSelect.querySelectorAll('input[type="checkbox"]:checked').length > 0 ||
                                 tagSelect.value ||
                                 setSelect.value;
     if (isAnyFilterSelected) {
         // 如果有篩選條件被選擇，則清除所有篩選條件
         keywordSelect.value = '';
         typeSelect.value = '';
-        attributeSelect.value = '';
+        attributeSelect.querySelectorAll('input[type="checkbox"]').forEach(checkbox => {
+            checkbox.checked = false; // 清除屬性多選框
+        });
         tagSelect.value = '';
         setSelect.value = '';
         clearKeywordBtn.style.display = 'none'; // 隱藏 "X"
