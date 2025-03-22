@@ -3,7 +3,7 @@ const clearFiltersBtn = document.getElementById('clear-filters');  // 清除篩�
 const cardContainer = document.getElementById('card-container');  // 卡牌展示區
 const keywordSelect = document.getElementById('keyword');  // 關鍵字
 const typeSelect = document.getElementById('type');  // 類型
-const attributeSelect = document.getElementById('attribute');  // 屬性
+// const attributeSelect = document.getElementById('attribute');  // 屬性
 const tagSelect = document.getElementById('tag');  // 標籤
 const setSelect = document.getElementById('set');  // 卡包
 const clearKeywordBtn = document.getElementById('clear-keyword');  // 關鍵字關閉按鈕
@@ -96,8 +96,6 @@ keywordSelect.innerHTML = '';
             attributeFilterContainer.appendChild(label);
         }
     });
-    // 設定預設為空值（選單本身保持空）
-    // attributeSelect.value = "";
 
 // 清空標籤下拉選單
 tagSelect.innerHTML = '';
@@ -160,7 +158,7 @@ function filterCards() {
     displayCards(filteredCards);
 }
 
-// 去重函數，根據所有篩選條件（包括名稱、類型、屬性、tag、id等）進行去重
+// 去重函數，根據所有篩選條件（包括名稱、類型、屬性、標籤、卡包）進行去重
 function removeDuplicates(cards) {
     const seen = new Set();
     const uniqueCards = [];
