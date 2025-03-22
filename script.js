@@ -132,11 +132,12 @@ setSelect.innerHTML = '';
     // 設定預設為空值（選單本身保持空）
     setSelect.value = "";
 
-    // 確保銷毀並重新初始化 Select2
-$(keywordSelect).select2('destroy').select2({
-    // placeholder: "請選擇關鍵字",
-    // allowClear: true
-});
+    // 初始化 Select2
+    $('#keyword').select2({
+        // allowClear: true,
+        // placeholder: '請選擇關鍵字',
+        // width: '100%'
+    });
 
 }
 
