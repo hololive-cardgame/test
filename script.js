@@ -4,8 +4,6 @@ const cardContainer = document.getElementById('card-container');  // 卡牌展�
 const keywordSelect = document.getElementById('keyword');  // 關鍵字
 const typeSelect = document.getElementById('type');  // 類型
 const attributeSelect = document.getElementById('attribute');  // 屬性
-const dropdown = document.getElementById('attribute-dropdown');
-const placeholder = document.getElementById('attribute-placeholder');
 const tagSelect = document.getElementById('tag');  // 標籤
 const setSelect = document.getElementById('set');  // 卡包
 const clearKeywordBtn = document.getElementById('clear-keyword');  // 關鍵字關閉按鈕
@@ -16,9 +14,6 @@ const closeModal = document.getElementById('close-modal');
 
 // 篩選後的卡牌資料
 let filteredCards = [];
-
-// 用來儲存已選擇的屬性
-let selectedAttributes = []; 
 
 // 使用 fetch 從 JSON 檔案載入資料
 fetch('cards.json')
@@ -49,10 +44,6 @@ cardsData.forEach(card => {
     keywords.add(card.name);
     types.add(card.type);
     attributes.add(card.attribute);
-
-    // 根據從 JSON 中獲取的屬性生成下拉選單選項
-    generateAttributeOptions(Array.from(attributes));  // 轉換 Set 為 Array 並傳入
-    
     if (card.tag) {
         card.tag.split(' / ').forEach(tag => tags.add(tag));
     }
@@ -89,7 +80,7 @@ keywordSelect.innerHTML = '';
         option.textContent = type;
         typeSelect.appendChild(option);
     });
-/*
+
 // 清空屬性下拉選單
 attributeSelect.innerHTML = '';
     // 填充屬性選項
@@ -103,7 +94,7 @@ attributeSelect.innerHTML = '';
     });
     // 設定預設為空值（選單本身保持空）
     attributeSelect.value = "";
-*/
+
 // 清空標籤下拉選單
 tagSelect.innerHTML = '';
     // 填充標籤選項
@@ -138,52 +129,6 @@ setSelect.innerHTML = '';
     });
     // 設定預設為空值（選單本身保持空）
     setSelect.value = "";
-}
-
-// 生成屬性選項
-function generateAttributeOptions(attributes) {
-    const dropdown = document.getElementById('attribute-dropdown');
-    dropdown.innerHTML = '';  // 清空下拉選單
-
-    attributes.forEach(attr => {
-        const option = document.createElement('div');
-        option.classList.add('dropdown-item');
-        option.textContent = attr;
-
-        // 點擊選項後將其添加到已選區域
-        option.addEventListener('click', () => {
-            if (!selectedAttributes.includes(attr)) {
-                selectedAttributes.push(attr);
-                updateSelectedAttributes();
-            }
-        });
-
-        dropdown.appendChild(option);
-    });
-}
-
-// 更新已選的屬性顯示
-function updateSelectedAttributes() {
-    const selectedContainer = document.getElementById('attribute-selected');
-    selectedContainer.innerHTML = ''; // 清空已選區域
-
-    selectedAttributes.forEach(attr => {
-        const selectedItem = document.createElement('div');
-        selectedItem.classList.add('selected-item');
-        selectedItem.textContent = attr;
-
-        // "X" 按鈕來刪除選項
-        const removeBtn = document.createElement('span');
-        removeBtn.classList.add('remove-btn');
-        removeBtn.textContent = 'X';
-        removeBtn.addEventListener('click', () => {
-            selectedAttributes = selectedAttributes.filter(item => item !== attr);
-            updateSelectedAttributes();
-        });
-
-        selectedItem.appendChild(removeBtn);
-        selectedContainer.appendChild(selectedItem);
-    });
 }
 
 // 根據篩選條件顯示卡牌
@@ -312,16 +257,7 @@ clearKeywordBtn.addEventListener('click', () => {
     filterCards(); // 清除後重新篩選卡牌
 });
 typeSelect.addEventListener('change', filterCards);
-attributeSelect.addEventListener('click', () => {
-    dropdown.style.display = dropdown.style.display === 'block' ? 'none' : 'block';
-});
-
-// 點擊下拉選單外部區域時，隱藏下拉選單
-document.addEventListener('click', (event) => {
-    if (!attribute.contains(event.target)) {
-        dropdown.style.display = 'none';
-    }
-});
+attributeSelect.addEventListener('change', filterCards);
 tagSelect.addEventListener('change', filterCards);
 setSelect.addEventListener('change', filterCards);
 
