@@ -218,6 +218,12 @@ clearFiltersBtn.addEventListener('click', () => {
         tagSelect.value = '';
         setSelect.value = '';
         clearKeywordBtn.style.display = 'none'; // 隱藏 "X"
+
+        // 清除所有屬性篩選框的選擇
+        const attributeCheckboxes = document.querySelectorAll('input[name="attribute"]');
+        attributeCheckboxes.forEach(checkbox => {
+            checkbox.checked = false;  // 取消選中所有 checkbox
+        });
     
         // 顯示所有卡牌
         displayCards(cardsData);
