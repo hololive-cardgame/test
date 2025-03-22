@@ -1,7 +1,7 @@
 // 取得所有的篩選選單元素
 const clearFiltersBtn = document.getElementById('clear-filters');  // 清除篩選條件按鈕
 const cardContainer = document.getElementById('card-container');  // 卡牌展示區
-const keywordSelect = document.getElementById('keyword-options');  // 關鍵字
+const keywordSelect = document.getElementById('keyword');  // 關鍵字
 const typeSelect = document.getElementById('type');  // 類型
 // const attributeSelect = document.getElementById('attribute');  // 屬性
 const tagSelect = document.getElementById('tag');  // 標籤
@@ -21,7 +21,6 @@ fetch('cards.json')
     .then(data => {
         cardsData = data;
         generateFilterOptions();  // 生成篩選選項
-        generateSelectOptions("keyword", cards.keywords);  // 載入關鍵字選項
         displayCards(cardsData);  // 顯示所有卡牌
     })
     .catch(error => {
@@ -64,10 +63,9 @@ keywordSelect.innerHTML = '';
     // 填充關鍵字選項
     keywords.forEach(keyword => {
         if (keyword) {
-            const option = document.createElement('div');
-            option.classList.add('custom-option');
+            const option = document.createElement('option');
+            option.value = keyword;
             option.textContent = keyword;
-            option.addEventListener('click', () => selectOption('keyword', keyword));
             keywordSelect.appendChild(option);
         }
     });
@@ -133,70 +131,6 @@ setSelect.innerHTML = '';
     });
     // 設定預設為空值（選單本身保持空）
     setSelect.value = "";
-}
-
-function selectOption(type, value) {
-    const displayElement = document.getElementById(`${type}-display`);
-    const optionsElement = document.getElementById(`${type}-options`);
-
-    // 更新顯示內容
-    displayElement.textContent = value;
-
-    // 隱藏選項區域
-    optionsElement.style.display = 'none';
-
-    // 更新 select 元素的值
-    const selectElement = document.getElementById(type);
-    selectElement.value = value;
-
-    // 重新觸發篩選卡牌
-    filterCards();
-}
-
-document.querySelectorAll('.custom-select-display').forEach(display => {
-    display.addEventListener('click', function () {
-        const selectContainer = display.closest('.custom-select');
-
-        // 切換選單的顯示狀態
-        if (selectContainer.classList.contains('active')) {
-            selectContainer.classList.remove('active');
-        } else {
-            // 關閉所有打開的選單
-            document.querySelectorAll('.custom-select').forEach(select => {
-                select.classList.remove('active');
-            });
-
-            // 打開當前選單
-            selectContainer.classList.add('active');
-        }
-    });
-});
-
-// 如果點擊選項外的區域，則關閉選單
-document.addEventListener('click', function(event) {
-    if (!event.target.closest('.custom-select')) {
-        document.querySelectorAll('.custom-select').forEach(select => {
-            select.classList.remove('active');
-        });
-    }
-});
-
-function generateSelectOptions(type, options) {
-    const optionsContainer = document.getElementById(`${type}-options`);
-    optionsContainer.innerHTML = ''; // 清空現有選項
-
-    options.forEach(option => {
-        const optionElement = document.createElement('div');
-        optionElement.classList.add('custom-option');
-        optionElement.textContent = option;
-
-        // 註冊點擊事件，選擇此選項
-        optionElement.addEventListener('click', function() {
-            selectOption(type, option);  // 更新顯示並隱藏選項
-        });
-
-        optionsContainer.appendChild(optionElement);
-    });
 }
 
 // 根據篩選條件顯示卡牌
