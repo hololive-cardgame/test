@@ -21,12 +21,10 @@
             <form id="filter-form">
                 <label fro="keyword">關鍵字</label>
                 <div id="keyword-container">
-                    <div id="custom-select-keyword" class="custom-select">
-                        <div class="selected-value">選擇關鍵字</div>
-                        <ul id="keyword-list" class="option-list" style="display: none;">
-                            <!-- 下拉選單選項會從 JSON 動態加載 -->
-                        </ul>
-                    </div>
+                    <select id="keyword" name="keyword">
+                        <option value=""></option>
+                        <!-- 下拉選單選項會從 JSON 動態加載 -->
+                    </select>
                     <span id="clear-keyword" class="clear-button" style="display: none;">×</span>
                 </div>
                 
