@@ -4,7 +4,6 @@ const cardContainer = document.getElementById('card-container');  // 卡牌展�
 const keywordSelect = document.getElementById('keyword');  // 關鍵字
 const typeSelect = document.getElementById('type');  // 類型
 const attributeSelect = document.getElementById('attribute');  // 屬性
-const attributeSelectedContainer = document.getElementById('attribute-selected');
 const tagSelect = document.getElementById('tag');  // 標籤
 const setSelect = document.getElementById('set');  // 卡包
 const clearKeywordBtn = document.getElementById('clear-keyword');  // 關鍵字關閉按鈕
@@ -136,14 +135,14 @@ setSelect.innerHTML = '';
 function filterCards() {
     const keyword = keywordSelect.value.toLowerCase();
     const type = typeSelect.value;
-    const selectedAttributes = Array.from(document.getElementById('attribute-selected').children).map(item => item.textContent);
+    const attribute = attributeSelect.value;
     const tag = tagSelect.value;
     const set = setSelect.value;
 
     const filteredCards = cardsData.filter(card => {
         const matchesKeyword = card.name.toLowerCase().includes(keyword);
         const matchesType = type ? card.type === type : true;
-        const matchesAttribute = selectedAttributes.length === 0 || selectedAttributes.includes(card.attribute);
+        const matchesAttribute = attribute ? card.attribute === attribute : true;
         // 處理 tag 的篩選
         const matchesTag = tag ? card.tag && card.tag.split(' / ').includes(tag) : true;
         const matchesSet = set ? card.set === set : true;
@@ -258,40 +257,7 @@ clearKeywordBtn.addEventListener('click', () => {
     filterCards(); // 清除後重新篩選卡牌
 });
 typeSelect.addEventListener('change', filterCards);
-attributeSelect.addEventListener('change', function() {
-    // 清空已選項目顯示區
-    attributeSelectedContainer.innerHTML = '';
-
-    // 獲取所有選中的屬性
-    const selectedAttributes = Array.from(attributeSelect.selectedOptions).map(option => option.value);
-
-    // 顯示選擇的屬性
-    selectedAttributes.forEach(attribute => {
-        const selectedItem = document.createElement('div');
-        selectedItem.classList.add('selected-item');
-        selectedItem.textContent = attribute;
-
-        // 添加 "X" 按鈕以移除選項
-        const removeBtn = document.createElement('span');
-        removeBtn.textContent = 'X';
-        removeBtn.classList.add('remove-btn');
-        removeBtn.onclick = function() {
-            // 移除該選項
-            const optionToRemove = Array.from(attributeSelect.options).find(option => option.value === attribute);
-            if (optionToRemove) {
-                optionToRemove.selected = false;
-            }
-            // 更新已選項目顯示區
-            attributeSelectedContainer.removeChild(selectedItem);
-            filterCards();
-        };
-        selectedItem.appendChild(removeBtn);
-
-        attributeSelectedContainer.appendChild(selectedItem);
-    });
-
-    filterCards();
-});
+attributeSelect.addEventListener('change', filterCards);
 tagSelect.addEventListener('change', filterCards);
 setSelect.addEventListener('change', filterCards);
 
