@@ -207,24 +207,24 @@ clearFiltersBtn.addEventListener('click', () => {
     // 檢查是否有任何篩選條件被選擇
     const isAnyFilterSelected = keywordSelect.value ||
                                 typeSelect.value ||
-                                attributeSelect.value ||
+                                Array.from(document.querySelectorAll('input[name="attribute"]')).some(checkbox => checkbox.checked);
                                 tagSelect.value ||
                                 setSelect.value;
     if (isAnyFilterSelected) {
         // 如果有篩選條件被選擇，則清除所有篩選條件
         keywordSelect.value = '';
         typeSelect.value = '';
-        attributeSelect.value = '';
-        tagSelect.value = '';
-        setSelect.value = '';
-        clearKeywordBtn.style.display = 'none'; // 隱藏 "X"
-
+        
         // 清除所有屬性篩選框的選擇
         const attributeCheckboxes = document.querySelectorAll('input[name="attribute"]');
         attributeCheckboxes.forEach(checkbox => {
             checkbox.checked = false;  // 取消選中所有 checkbox
         });
-    
+        
+        tagSelect.value = '';
+        setSelect.value = '';
+        clearKeywordBtn.style.display = 'none'; // 隱藏 "X"
+
         // 顯示所有卡牌
         displayCards(cardsData);
     }
