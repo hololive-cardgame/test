@@ -140,19 +140,15 @@ setSelect.innerHTML = '';
 
 // 顯示多選選項函數
 function displayMultipleSelectOptions(optionsSet, filterName) {
-    const container = document.getElementById(filterName + 'Select');
+    const container = document.getElementById(filterName);
     container.innerHTML = ''; // 清空選項
 
     optionsSet.forEach(option => {
         const optionDiv = document.createElement('div');
         optionDiv.classList.add('filter-option');
         optionDiv.textContent = option;
-        const removeBtn = document.createElement('span');
-        removeBtn.textContent = '×';
-        removeBtn.classList.add('remove-btn');
-        removeBtn.onclick = () => removeSelectedOption(option, filterName);
-        optionDiv.appendChild(removeBtn);
-
+        
+        // 當選項被點擊時，加入已選項目
         optionDiv.onclick = () => addSelectedOption(option, filterName);
         container.appendChild(optionDiv);
     });
@@ -161,11 +157,13 @@ function displayMultipleSelectOptions(optionsSet, filterName) {
 // 添加選中的選項
 function addSelectedOption(option, filterName) {
     const selectedContainer = document.getElementById(filterName + 'Selected');
+    // 避免重複選擇
     if (!Array.from(selectedContainer.children).some(item => item.textContent === option)) {
         const selectedItem = document.createElement('div');
         selectedItem.classList.add('selected-item');
         selectedItem.textContent = option;
-
+        
+        // 增加移除按鈕
         const removeBtn = document.createElement('span');
         removeBtn.textContent = '×';
         removeBtn.classList.add('remove-btn');
