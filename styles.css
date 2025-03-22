@@ -49,6 +49,37 @@ select#keyword {
     display: none;
 }
 
+.multi-select {
+    display: flex;
+    flex-wrap: wrap;
+    gap: 10px;
+    margin-bottom: 15px;
+}
+
+.multi-select div {
+    background-color: #f0f0f0;
+    padding: 5px 10px;
+    border-radius: 5px;
+    display: inline-flex;
+    align-items: center;
+    gap: 5px;
+    cursor: pointer;
+}
+
+.selected-item {
+    background-color: #d3ffd3;
+    padding: 5px 10px;
+    border-radius: 5px;
+    display: inline-flex;
+    align-items: center;
+    gap: 5px;
+}
+
+.selected-item .remove-btn {
+    cursor: pointer;
+    color: red;
+}
+
 .right-side {
     width: 75%;
     padding: 10px;
