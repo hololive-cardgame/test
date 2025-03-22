@@ -58,6 +58,13 @@ cardsData.forEach(card => {
     }
 });
 
+    // 顯示多選框
+    // displayMultipleSelectOptions(keywords, 'keyword');
+    // displayMultipleSelectOptions(types, 'type');
+    displayMultipleSelectOptions(attributes, 'attribute');
+    displayMultipleSelectOptions(tags, 'tag');
+    displayMultipleSelectOptions(sets, 'set');
+
 // 清空關鍵字下拉選單
 keywordSelect.innerHTML = '';
     // 填充關鍵字選項
@@ -131,21 +138,72 @@ setSelect.innerHTML = '';
     setSelect.value = "";
 }
 
+// 顯示多選選項函數
+function displayMultipleSelectOptions(optionsSet, filterName) {
+    const container = document.getElementById(filterName + 'Select');
+    container.innerHTML = ''; // 清空選項
+
+    optionsSet.forEach(option => {
+        const optionDiv = document.createElement('div');
+        optionDiv.classList.add('filter-option');
+        optionDiv.textContent = option;
+        const removeBtn = document.createElement('span');
+        removeBtn.textContent = '×';
+        removeBtn.classList.add('remove-btn');
+        removeBtn.onclick = () => removeSelectedOption(option, filterName);
+        optionDiv.appendChild(removeBtn);
+
+        optionDiv.onclick = () => addSelectedOption(option, filterName);
+        container.appendChild(optionDiv);
+    });
+}
+
+// 添加選中的選項
+function addSelectedOption(option, filterName) {
+    const selectedContainer = document.getElementById(filterName + 'Selected');
+    if (!Array.from(selectedContainer.children).some(item => item.textContent === option)) {
+        const selectedItem = document.createElement('div');
+        selectedItem.classList.add('selected-item');
+        selectedItem.textContent = option;
+
+        const removeBtn = document.createElement('span');
+        removeBtn.textContent = '×';
+        removeBtn.classList.add('remove-btn');
+        removeBtn.onclick = () => removeSelectedOption(option, filterName);
+        selectedItem.appendChild(removeBtn);
+
+        selectedContainer.appendChild(selectedItem);
+
+        // 更新篩選條件
+        filterCards();
+    }
+}
+
+// 刪除選中的選項
+function removeSelectedOption(option, filterName) {
+    const selectedContainer = document.getElementById(filterName + 'Selected');
+    const itemToRemove = Array.from(selectedContainer.children).find(item => item.textContent === option);
+    if (itemToRemove) {
+        selectedContainer.removeChild(itemToRemove);
+        filterCards();
+    }
+}
+
 // 根據篩選條件顯示卡牌
 function filterCards() {
     const keyword = keywordSelect.value.toLowerCase();
     const type = typeSelect.value;
-    const attribute = attributeSelect.value;
-    const tag = tagSelect.value;
-    const set = setSelect.value;
+    const selectedAttributes = Array.from(document.getElementById('attributeSelected').children).map(item => item.textContent);
+    const selectedTags = Array.from(document.getElementById('tagSelected').children).map(item => item.textContent);
+    const selectedSets = Array.from(document.getElementById('setSelected').children).map(item => item.textContent);
 
     const filteredCards = cardsData.filter(card => {
         const matchesKeyword = card.name.toLowerCase().includes(keyword);
         const matchesType = type ? card.type === type : true;
-        const matchesAttribute = attribute ? card.attribute === attribute : true;
+        const matchesAttribute = selectedAttributes.length === 0 || selectedAttributes.includes(card.attribute);
         // 處理 tag 的篩選
-        const matchesTag = tag ? card.tag && card.tag.split(' / ').includes(tag) : true;
-        const matchesSet = set ? card.set === set : true;
+        const matchesTag = selectedTags.length === 0 || (card.tag && selectedTags.some(tag => card.tag.split(' / ').includes(tag)));
+        const matchesSet = selectedSets.length === 0 || selectedSets.includes(card.set);
 
         return matchesKeyword && matchesType && matchesAttribute && matchesTag && matchesSet;
     });
