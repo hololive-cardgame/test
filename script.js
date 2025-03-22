@@ -214,6 +214,8 @@ clearFiltersBtn.addEventListener('click', () => {
     if (isAnyFilterSelected) {
         // 如果有篩選條件被選擇，則清除所有篩選條件
         keywordSelect.value = '';
+        document.querySelector('#custom-select-keyword .selected-value').textContent = '選擇關鍵字'; // 更新顯示的文字
+        clearKeywordBtn.style.display = 'none'; // 隱藏 "X" 按鈕
         typeSelect.value = '';
         
         // 清除所有屬性篩選框的選擇
