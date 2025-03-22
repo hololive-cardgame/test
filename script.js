@@ -141,7 +141,7 @@ function filterCards() {
     const tag = tagSelect.value;
     const set = setSelect.value;
 
-    const filteredCards = cardsData.filter(card => {
+        filteredCards = cardsData.filter(card => {
         const matchesKeyword = card.name.toLowerCase().includes(keyword);
         const matchesType = type ? card.type === type : true;
         const matchesAttribute = selectedAttributes.length === 0 || selectedAttributes.includes(card.attribute);
@@ -155,7 +155,7 @@ function filterCards() {
     // 去重邏輯：基於卡牌的所有篩選條件去重
     const uniqueCards = removeDuplicates(filteredCards);
     
-    displayCards(filteredCards);
+    displayCards(uniqueCards);
 }
 
 // 去重函數，根據所有篩選條件（包括名稱、類型、屬性、標籤、卡包）進行去重
