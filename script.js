@@ -70,7 +70,8 @@ keywordSelect.innerHTML = '';
         }
     });
     // 設定預設為空值（選單本身保持空）
-    keywordSelect.value = "";
+    $('#keyword').val("");
+    $('#keyword').trigger('change');
 
 // 類型不用清空下拉選單
     // 填充類型選項
@@ -139,7 +140,7 @@ setSelect.innerHTML = '';
             // allowClear: true,  // 允許清除選項
             // placeholder: '請選擇關鍵字',
             // width: '100%',  // 調整下拉框寬度
-            tags: false
+            minimumResultsForSearch: -1,
         });
     }
 });
@@ -216,14 +217,15 @@ function displayCards(cards) {
 // 清除篩選條件
 clearFiltersBtn.addEventListener('click', () => {
     // 檢查是否有任何篩選條件被選擇
-    const isAnyFilterSelected = keywordSelect.value ||
+    const isAnyFilterSelected = $('#keyword').val() ||
                                 typeSelect.value ||
                                 Array.from(document.querySelectorAll('input[name="attribute"]')).some(checkbox => checkbox.checked) ||
                                 tagSelect.value ||
                                 setSelect.value;
     if (isAnyFilterSelected) {
         // 如果有篩選條件被選擇，則清除所有篩選條件
-        keywordSelect.value = '';
+       $('#keyword').val("");
+        $('#keyword').trigger('change');
         typeSelect.value = '';
         
         // 清除所有屬性篩選框的選擇
@@ -273,7 +275,8 @@ $('#keyword').on('change', (e) => {
 
 // 清除關鍵字篩選
 clearKeywordBtn.addEventListener('click', () => {
-    keywordSelect.value = ''; // 清空選擇
+    $('#keyword').val(""); // 清空選擇
+    $('#keyword').trigger('change');
     clearKeywordBtn.style.display = 'none'; // 隱藏 "X" 按鈕
     filterCards(); // 清除後重新篩選卡牌
 });
