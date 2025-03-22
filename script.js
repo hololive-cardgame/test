@@ -134,15 +134,14 @@ setSelect.innerHTML = '';
     setSelect.value = "";
 
     // 初始化 Select2
-   $(document).ready(function() {
-    if (!$('#keyword').hasClass('select2-hidden-accessible')) {  // 確保沒有重複初始化
-        $('#keyword').select2({
-            // allowClear: true,  // 允許清除選項
-            // placeholder: '請選擇關鍵字',
-            // width: '100%',  // 調整下拉框寬度
-            tags: false
-        });
-    }
+      $(document).ready(function() {
+    // 初始化 Select2
+    $('#keyword').select2({
+        // allowClear: true,  // 允許清除選項
+        // placeholder: '請選擇',  // 提示文本
+        // width: '100%'  // 調整下拉框寬度
+        minimumInputLength: Infinity
+    });
 });
 
 }
