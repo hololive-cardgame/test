@@ -70,11 +70,11 @@ keywordSelect.innerHTML = '';
         }
     });
     // 設定預設為空值（選單本身保持空）
-    keywordSelect.value = "";
+    // keywordSelect.value = "";
 
     // 確保銷毀並重新初始化 Select2
 $(keywordSelect).select2('destroy').select2({
-    // placeholder: "請選擇關鍵字",
+    placeholder: "",
     allowClear: true
 });
 
@@ -141,7 +141,7 @@ setSelect.innerHTML = '';
 
 // 根據篩選條件顯示卡牌
 function filterCards() {
-    const keyword = keywordSelect.value.toLowerCase();
+    const keyword = $(keywordSelect).val().toLowerCase();
     const type = typeSelect.value;
     const selectedAttributes = Array.from(document.querySelectorAll('input[name="attribute"]:checked')).map(checkbox => checkbox.value);
     const tag = tagSelect.value;
@@ -209,14 +209,14 @@ function displayCards(cards) {
 // 清除篩選條件
 clearFiltersBtn.addEventListener('click', () => {
     // 檢查是否有任何篩選條件被選擇
-    const isAnyFilterSelected = keywordSelect.value ||
+    const isAnyFilterSelected = $(keywordSelect).val() ||
                                 typeSelect.value ||
                                 Array.from(document.querySelectorAll('input[name="attribute"]')).some(checkbox => checkbox.checked) ||
                                 tagSelect.value ||
                                 setSelect.value;
     if (isAnyFilterSelected) {
         // 如果有篩選條件被選擇，則清除所有篩選條件
-        keywordSelect.value = '';
+        $(keywordSelect).val() = '';
         typeSelect.value = '';
         
         // 清除所有屬性篩選框的選擇
@@ -266,7 +266,7 @@ keywordSelect.addEventListener('change', (e) => {
 
 // 清除關鍵字篩選
 clearKeywordBtn.addEventListener('click', () => {
-    keywordSelect.value = ''; // 清空選擇
+    $(keywordSelect).val() = ''; // 清空選擇
     clearKeywordBtn.style.display = 'none'; // 隱藏 "X" 按鈕
     filterCards(); // 清除後重新篩選卡牌
 });
