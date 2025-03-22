@@ -35,16 +35,10 @@
                 </select>
 
                 <label for="attribute">屬性</label>
-                <div id="attribute-container" class="multi-select-container">
-                    <div id="attribute" class="custom-select">
-                        <span id="attribute-placeholder">選擇屬性</span>
-                        <div id="attribute-dropdown" class="dropdown">
-                            <!-- 下拉選單選項會從 JSON 動態加載 -->
-                        </div>
-                    </div>
-                    <!-- 顯示選擇的屬性 -->
-                    <div id="attribute-selected" class="multi-select"></div>
-                </div>
+                <select id="attribute" name="attribute">
+                    <option value=""></option>
+                    <!-- 下拉選單選項會從 JSON 動態加載 -->
+                </select>
                 
                 <label for="tag">標籤</label>
                 <select id="tag" name="tag">
