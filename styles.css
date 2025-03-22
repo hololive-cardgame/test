@@ -49,6 +49,46 @@ select#keyword {
     display: none;
 }
 
+.custom-select {
+    position: relative;
+    width: 200px;
+    font-size: 16px;
+}
+
+.custom-select-display {
+    padding: 10px;
+    border: 1px solid #ccc;
+    background-color: #fff;
+    cursor: pointer;
+    text-align: left;
+}
+
+.custom-select-options {
+    display: none;
+    position: absolute;
+    top: 100%;
+    left: 0;
+    width: 100%;
+    max-height: 200px;
+    overflow-y: auto;  /* 設定滾動條 */
+    border: 1px solid #ccc;
+    background-color: #fff;
+    z-index: 10;
+}
+
+.custom-option {
+    padding: 10px;
+    cursor: pointer;
+}
+
+.custom-option:hover {
+    background-color: #f0f0f0;
+}
+
+.custom-select.active .custom-select-options {
+    display: block;
+}
+
 .right-side {
     width: 75%;
     padding: 10px;
