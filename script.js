@@ -72,12 +72,6 @@ keywordSelect.innerHTML = '';
     // 設定預設為空值（選單本身保持空）
     keywordSelect.value = "";
 
-    // 使用 Select2 初始化
-    $(keywordSelect).select2({
-        // placeholder: "請選擇關鍵字",
-        // allowClear: true
-    });
-
 // 類型不用清空下拉選單
     // 填充類型選項
     types.forEach(type => {
@@ -137,6 +131,12 @@ setSelect.innerHTML = '';
     });
     // 設定預設為空值（選單本身保持空）
     setSelect.value = "";
+
+    // 使用 Select2 初始化
+    $(keywordSelect).select2({
+        // placeholder: "請選擇關鍵字",
+        // allowClear: true
+    });
 
 }
 
