@@ -140,7 +140,7 @@ setSelect.innerHTML = '';
             // allowClear: true,  // 允許清除選項
             // placeholder: '請選擇關鍵字',
             // width: '100%',  // 調整下拉框寬度
-            minimumResultsForSearch: 0,
+            minimumResultsForSearch: 0
         });
     }
 });
