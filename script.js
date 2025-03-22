@@ -135,19 +135,19 @@ setSelect.innerHTML = '';
 function filterCards() {
     const keyword = keywordSelect.value.toLowerCase();
     const type = typeSelect.value;
-    const attribute = attributeSelect.value;
-    const tag = tagSelect.value;
-    const set = setSelect.value;
+    const attributes = Array.from(attributeSelect.selectedOptions).map(option => option.value);
+    const tags = Array.from(tagSelect.selectedOptions).map(option => option.value);
+    const sets = Array.from(setSelect.selectedOptions).map(option => option.value);
 
     const filteredCards = cardsData.filter(card => {
         const matchesKeyword = card.name.toLowerCase().includes(keyword);
         const matchesType = type ? card.type === type : true;
-        const matchesAttribute = attribute ? card.attribute === attribute : true;
+        const matchesAttributes = attributes.length > 0 ? attributes.includes(card.attribute) : true;
         // 處理 tag 的篩選
-        const matchesTag = tag ? card.tag && card.tag.split(' / ').includes(tag) : true;
-        const matchesSet = set ? card.set === set : true;
+        const matchesTags = tags.length > 0 ? card.tag && tags.some(tag => card.tag.split(' / ').includes(tag)) : true;
+        const matchesSets = sets.length > 0 ? sets.includes(card.set) : true;
 
-        return matchesKeyword && matchesType && matchesAttribute && matchesTag && matchesSet;
+        return matchesKeyword && matchesType && matchesAttributes && matchesTags && matchesSets;
     });
 
     // 去重邏輯：基於卡牌的所有篩選條件去重
@@ -174,6 +174,28 @@ function removeDuplicates(cards) {
     return uniqueCards;
 }
 
+// 清除篩選條件
+clearFiltersBtn.addEventListener('click', () => {
+    // 檢查是否有任何篩選條件被選擇
+    const isAnyFilterSelected = keywordSelect.value ||
+                                typeSelect.value ||
+                                attributeSelect.value ||
+                                tagSelect.value ||
+                                setSelect.value;
+    if (isAnyFilterSelected) {
+        // 如果有篩選條件被選擇，則清除所有篩選條件
+        keywordSelect.value = '';
+        typeSelect.value = '';
+        attributeSelect.value = '';
+        tagSelect.value = '';
+        setSelect.value = '';
+        clearKeywordBtn.style.display = 'none'; // 隱藏 "X"
+    
+        // 顯示所有卡牌
+        displayCards(cardsData);
+    }
+});
+
 // 顯示卡牌
 function displayCards(cards) {
     cardContainer.innerHTML = ''; // 清空現有卡牌
@@ -197,28 +219,6 @@ function displayCards(cards) {
         cardContainer.appendChild(cardElement);
     });
 }
-
-// 清除篩選條件
-clearFiltersBtn.addEventListener('click', () => {
-    // 檢查是否有任何篩選條件被選擇
-    const isAnyFilterSelected = keywordSelect.value ||
-                                typeSelect.value ||
-                                attributeSelect.value ||
-                                tagSelect.value ||
-                                setSelect.value;
-    if (isAnyFilterSelected) {
-        // 如果有篩選條件被選擇，則清除所有篩選條件
-        keywordSelect.value = '';
-        typeSelect.value = '';
-        attributeSelect.value = '';
-        tagSelect.value = '';
-        setSelect.value = '';
-        clearKeywordBtn.style.display = 'none'; // 隱藏 "X"
-    
-        // 顯示所有卡牌
-        displayCards(cardsData);
-    }
-});
 
 // 顯示卡牌詳細資訊
 function showCardModal(card) {
@@ -260,6 +260,31 @@ typeSelect.addEventListener('change', filterCards);
 attributeSelect.addEventListener('change', filterCards);
 tagSelect.addEventListener('change', filterCards);
 setSelect.addEventListener('change', filterCards);
+
+// 清除已選擇的屬性、標籤、卡包項目
+function clearSelection(selectElement) {
+    Array.from(selectElement.selectedOptions).forEach(option => {
+        option.selected = false;
+    });
+}
+
+// 新增清除選項按鈕
+function addClearButton(selectElement) {
+    Array.from(selectElement.selectedOptions).forEach(option => {
+        const clearBtn = document.createElement('button');
+        clearBtn.textContent = 'X';
+        clearBtn.addEventListener('click', () => {
+            option.selected = false;
+            filterCards();
+        });
+        option.parentNode.appendChild(clearBtn);
+    });
+}
+
+// 當選項改變時顯示清除按鈕
+attributeSelect.addEventListener('change', () => addClearButton(attributeSelect));
+tagSelect.addEventListener('change', () => addClearButton(tagSelect));
+setSelect.addEventListener('change', () => addClearButton(setSelect));
 
 let currentPage = 1;
 const cardsPerPage = 10;
