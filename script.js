@@ -70,7 +70,7 @@ keywordSelect.innerHTML = '';
             document.getElementById('clear-keyword').style.display = 'inline-block';
             filterCards();
         });
-        keywordList.appendChild(li);
+        keywordSelect.appendChild(li);
     });
     // 設定預設為空值（選單本身保持空）
     keywordSelect.value = "";
