@@ -261,30 +261,34 @@ attributeSelect.addEventListener('change', filterCards);
 tagSelect.addEventListener('change', filterCards);
 setSelect.addEventListener('change', filterCards);
 
-// 清除已選擇的屬性、標籤、卡包項目
-function clearSelection(selectElement) {
-    Array.from(selectElement.selectedOptions).forEach(option => {
-        option.selected = false;
-    });
-}
+// 用於顯示 "X" 按鈕清除選擇
+function updateSelectedOptions(selectElement) {
+    const selectedValues = Array.from(selectElement.selectedOptions).map(option => option.value);
+    const container = selectElement.parentElement;
 
-// 新增清除選項按鈕
-function addClearButton(selectElement) {
-    Array.from(selectElement.selectedOptions).forEach(option => {
+    // 清除舊的 "X" 按鈕
+    const existingClearBtns = container.querySelectorAll('.clear-btn');
+    existingClearBtns.forEach(btn => btn.remove());
+
+    selectedValues.forEach(value => {
         const clearBtn = document.createElement('button');
+        clearBtn.classList.add('clear-btn');
         clearBtn.textContent = 'X';
         clearBtn.addEventListener('click', () => {
-            option.selected = false;
-            filterCards();
+            selectElement.querySelector(`option[value="${value}"]`).selected = false;
+            updateSelectedOptions(selectElement); // 更新 "X" 按鈕顯示
+            filterCards(); // 重新篩選
         });
-        option.parentNode.appendChild(clearBtn);
+
+        const label = container.querySelector(`label[for="${selectElement.id}"]`);
+        label.appendChild(clearBtn);
     });
 }
 
-// 當選項改變時顯示清除按鈕
-attributeSelect.addEventListener('change', () => addClearButton(attributeSelect));
-tagSelect.addEventListener('change', () => addClearButton(tagSelect));
-setSelect.addEventListener('change', () => addClearButton(setSelect));
+// 更新選項並顯示 "X"
+attributeSelect.addEventListener('change', () => updateSelectedOptions(attributeSelect));
+tagSelect.addEventListener('change', () => updateSelectedOptions(tagSelect));
+setSelect.addEventListener('change', () => updateSelectedOptions(setSelect));
 
 let currentPage = 1;
 const cardsPerPage = 10;
