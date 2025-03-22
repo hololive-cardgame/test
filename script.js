@@ -20,6 +20,10 @@ fetch('cards.json')
     .then(response => response.json())  // 解析 JSON 資料
     .then(data => {
         cardsData = data;
+
+        // 設置 size 屬性，讓下拉選單顯示最多 8 個選項並滾動
+        keywordSelect.size = 8;
+        
         generateFilterOptions();  // 生成篩選選項
         displayCards(cardsData);  // 顯示所有卡牌
     })
