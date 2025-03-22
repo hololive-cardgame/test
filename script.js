@@ -252,7 +252,7 @@ document.getElementById('filter-form').addEventListener('change', filterCards);
 
 // 監聽篩選條件變動，觸發篩選
 document.querySelector('#custom-select-keyword .selected-value').addEventListener('click', () => {
-    keywordSelect.style.display = list.style.display === 'block' ? 'none' : 'block';
+    keywordSelect.style.display = keywordSelect.style.display === 'block' ? 'none' : 'block';
 });
 keywordSelect.addEventListener('change', (e) => {
     // 顯示/隱藏 "X" 按鈕
