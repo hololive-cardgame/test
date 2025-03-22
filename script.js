@@ -4,6 +4,8 @@ const cardContainer = document.getElementById('card-container');  // 卡牌展�
 const keywordSelect = document.getElementById('keyword');  // 關鍵字
 const typeSelect = document.getElementById('type');  // 類型
 const attributeSelect = document.getElementById('attribute');  // 屬性
+const dropdown = document.getElementById('attribute-dropdown');
+const placeholder = document.getElementById('attribute-placeholder');
 const tagSelect = document.getElementById('tag');  // 標籤
 const setSelect = document.getElementById('set');  // 卡包
 const clearKeywordBtn = document.getElementById('clear-keyword');  // 關鍵字關閉按鈕
@@ -310,7 +312,16 @@ clearKeywordBtn.addEventListener('click', () => {
     filterCards(); // 清除後重新篩選卡牌
 });
 typeSelect.addEventListener('change', filterCards);
-attributeSelect.addEventListener('change', filterCards);
+attributeSelect.addEventListener('click', () => {
+    dropdown.style.display = dropdown.style.display === 'block' ? 'none' : 'block';
+});
+
+// 點擊下拉選單外部區域時，隱藏下拉選單
+document.addEventListener('click', (event) => {
+    if (!attribute.contains(event.target)) {
+        dropdown.style.display = 'none';
+    }
+});
 tagSelect.addEventListener('change', filterCards);
 setSelect.addEventListener('change', filterCards);
 
