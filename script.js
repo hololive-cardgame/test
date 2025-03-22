@@ -96,22 +96,16 @@ keywordSelect.innerHTML = '';
             attributeFilterContainer.appendChild(label);
         }
     });
-    // 設定預設為空值（選單本身保持空）
-    attributeSelect.value = "";
 
-// 清空標籤、多選框
-    const tagFilterContainer = document.getElementById('tag-filters');
-    tagFilterContainer.innerHTML = '';
+// 清空標籤下拉選單
+tagSelect.innerHTML = '';
+    // 填充標籤選項
     tags.forEach(tag => {
         if (tag) {
-            const label = document.createElement('label');
-            const checkbox = document.createElement('input');
-            checkbox.type = 'checkbox';
-            checkbox.value = tag;
-            checkbox.name = 'tag';
-            label.appendChild(checkbox);
-            label.appendChild(document.createTextNode(tag));
-            tagFilterContainer.appendChild(label);
+            const option = document.createElement('option');
+            option.value = tag;
+            option.textContent = tag;
+            tagSelect.appendChild(option);
         }
     });
     // 設定預設為空值（選單本身保持空）
@@ -143,17 +137,17 @@ setSelect.innerHTML = '';
 function filterCards() {
     const keyword = keywordSelect.value.toLowerCase();
     const type = typeSelect.value;
-    const selectedAttributes = Array.from(document.querySelectorAll('input[name="attribute"]:checked')).map(checkbox => checkbox.value);
-    const selectedTags = Array.from(document.querySelectorAll('input[name="tag"]:checked')).map(checkbox => checkbox.value);
-    const selectedSets = Array.from(document.querySelectorAll('input[name="set"]:checked')).map(checkbox => checkbox.value);
+    const attribute = attributeSelect.value;
+    const tag = tagSelect.value;
+    const set = setSelect.value;
 
     const filteredCards = cardsData.filter(card => {
         const matchesKeyword = card.name.toLowerCase().includes(keyword);
         const matchesType = type ? card.type === type : true;
-        const matchesAttribute = selectedAttributes.length === 0 || selectedAttributes.includes(card.attribute);
+        const matchesAttribute = attribute ? card.attribute === attribute : true;
         // 處理 tag 的篩選
-        const matchesTag = selectedTags.length === 0 || (card.tag && selectedTags.some(tag => card.tag.split(' / ').includes(tag)));
-        const matchesSet = selectedSets.length === 0 || selectedSets.includes(card.set);
+        const matchesTag = tag ? card.tag && card.tag.split(' / ').includes(tag) : true;
+        const matchesSet = set ? card.set === set : true;
 
         return matchesKeyword && matchesType && matchesAttribute && matchesTag && matchesSet;
     });
@@ -265,9 +259,9 @@ clearKeywordBtn.addEventListener('click', () => {
     filterCards(); // 清除後重新篩選卡牌
 });
 typeSelect.addEventListener('change', filterCards);
-document.getElementById('attribute-filters').addEventListener('change', filterCards);
-document.getElementById('tag-filters').addEventListener('change', filterCards);
-document.getElementById('set-filters').addEventListener('change', filterCards);
+attributeSelect.addEventListener('change', filterCards);
+tagSelect.addEventListener('change', filterCards);
+setSelect.addEventListener('change', filterCards);
 
 let currentPage = 1;
 const cardsPerPage = 10;
