@@ -150,8 +150,29 @@ function selectOption(type, value) {
 document.querySelectorAll('.custom-select-display').forEach(display => {
     display.addEventListener('click', function () {
         const selectContainer = display.parentElement;
-        selectContainer.classList.toggle('active');
+
+        // 如果選單已經打開，則關閉它，否則打開
+        if (selectContainer.classList.contains('active')) {
+            selectContainer.classList.remove('active');
+        } else {
+            // 先關閉所有已經開啟的選單
+            document.querySelectorAll('.custom-select').forEach(select => {
+                select.classList.remove('active');
+            });
+
+            // 打開當前選單
+            selectContainer.classList.add('active');
+        }
     });
+});
+
+// 如果點擊選項之外的區域，則隱藏選單
+document.addEventListener('click', function(event) {
+    if (!event.target.closest('.custom-select')) {
+        document.querySelectorAll('.custom-select').forEach(select => {
+            select.classList.remove('active');
+        });
+    }
 });
 
 // 根據篩選條件顯示卡牌
