@@ -81,21 +81,19 @@ keywordSelect.innerHTML = '';
         typeSelect.appendChild(option);
     });
 
-// 清空屬性、多選框
-    const attributeFilterContainer = document.getElementById('attribute-filters');
-    attributeFilterContainer.innerHTML = '';
+// 清空屬性下拉選單
+attributeSelect.innerHTML = '';
+    // 填充屬性選項
     attributes.forEach(attr => {
         if (attr) {
-            const label = document.createElement('label');
-            const checkbox = document.createElement('input');
-            checkbox.type = 'checkbox';
-            checkbox.value = attr;
-            checkbox.name = 'attribute';
-            label.appendChild(checkbox);
-            label.appendChild(document.createTextNode(attr));
-            attributeFilterContainer.appendChild(label);
+            const option = document.createElement('option');
+            option.value = attr;
+            option.textContent = attr;
+            attributeSelect.appendChild(option);
         }
     });
+    // 設定預設為空值（選單本身保持空）
+    attributeSelect.value = "";
 
 // 清空標籤下拉選單
 tagSelect.innerHTML = '';
