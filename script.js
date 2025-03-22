@@ -1,7 +1,7 @@
 // 取得所有的篩選選單元素
 const clearFiltersBtn = document.getElementById('clear-filters');  // 清除篩選條件按鈕
 const cardContainer = document.getElementById('card-container');  // 卡牌展示區
-const keywordSelect = document.getElementById('keyword');  // 關鍵字
+const keywordSelect = document.getElementById('keyword-options');  // 關鍵字
 const typeSelect = document.getElementById('type');  // 類型
 // const attributeSelect = document.getElementById('attribute');  // 屬性
 const tagSelect = document.getElementById('tag');  // 標籤
@@ -63,9 +63,10 @@ keywordSelect.innerHTML = '';
     // 填充關鍵字選項
     keywords.forEach(keyword => {
         if (keyword) {
-            const option = document.createElement('option');
-            option.value = keyword;
+            const option = document.createElement('div');
+            option.classList.add('custom-option');
             option.textContent = keyword;
+            option.addEventListener('click', () => selectOption('keyword', keyword));
             keywordSelect.appendChild(option);
         }
     });
@@ -132,6 +133,26 @@ setSelect.innerHTML = '';
     // 設定預設為空值（選單本身保持空）
     setSelect.value = "";
 }
+
+function selectOption(type, value) {
+    const displayElement = document.getElementById(`${type}-display`);
+    const optionsElement = document.getElementById(`${type}-options`);
+    const selectElement = document.getElementById(type);  // 保留原本的 select 元素，若需要
+
+    displayElement.textContent = value;
+    optionsElement.style.display = 'none';  // 隱藏選單
+    selectElement.value = value;  // 更新篩選器的值（如果需要，依賴原始 select）
+
+    // 觸發篩選卡牌
+    filterCards();
+}
+
+document.querySelectorAll('.custom-select-display').forEach(display => {
+    display.addEventListener('click', function () {
+        const selectContainer = display.parentElement;
+        selectContainer.classList.toggle('active');
+    });
+});
 
 // 根據篩選條件顯示卡牌
 function filterCards() {
