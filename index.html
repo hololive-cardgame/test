@@ -8,9 +8,14 @@
     <link rel="icon" href="icon.png" type="image/png">
     <!-- 載入css -->
     <link rel="stylesheet" href="styles.css">
-    <!-- 引入 Select2 的 CSS 和 JS -->
+    <!-- 引入 Select2 的 CSS 文件 -->
     <link href="https://cdn.jsdelivr.net/npm/select2@4.0.13/dist/css/select2.min.css" rel="stylesheet" />
-    <script src="https://cdn.jsdelivr.net/npm/select2@4.0.13/dist/js/select2.min.js"></script>
+    <style>
+        .select2-dropdown {
+            max-height: 200px; /* 設定最大高度 */
+            overflow-y: auto; /* 啟用滾動條 */
+        }
+    </style>
 </head>
     
 <body>
@@ -30,6 +35,20 @@
                     </select>
                     <span id="clear-keyword" class="clear-button" style="display: none;">×</span>
                 </div>
+
+                <!-- 引入 jQuery 和 Select2 的 JavaScript 文件 -->
+                <script src="https://code.jquery.com/jquery-3.6.0.min.js"></script>
+                <script src="https://cdn.jsdelivr.net/npm/select2@4.0.13/dist/js/select2.min.js"></script>
+                <script>
+                    $(document).ready(function() {
+                    // 啟用 Select2 插件
+                        $('#keyword').select2({
+                        dropdownAutoWidth: true,
+                        width: 'auto',
+                        placeholder: "選擇一個關鍵字"
+                        });
+                    });
+                </script>
                 
                 <label for="type">類型</label>
                 <select id="type" name="type">
